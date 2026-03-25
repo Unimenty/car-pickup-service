@@ -1,9 +1,22 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Header from '../components/Header.astro';
-import Hero from '../components/Hero.astro';
-import BookingForm from '../components/BookingForm';
-import { Star, ShieldCheck, Zap, Heart, Car, Users, Briefcase, Wind } from 'lucide-react';
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Hero from "../components/Hero.astro";
+import BookingForm from "../components/BookingForm";
+import TestimonialsCarousel from "../components/TestimonialsCarousel";
+import {
+	Star,
+	ShieldCheck,
+	Zap,
+	Heart,
+	Car,
+	Users,
+	Briefcase,
+	Wind,
+	ChevronRight,
+	MessageCircle,
+} from "lucide-react";
+import { MagicCard } from "../components/ui/magic-card";
 ---
 
 <Layout title="RiderOne | Reliable Accra & Tema Toyota Voxy Pickup Service">
@@ -11,144 +24,536 @@ import { Star, ShieldCheck, Zap, Heart, Car, Users, Briefcase, Wind } from 'luci
 	<main>
 		<Hero />
 
-		<!-- Why Choose Us Section -->
-		<section id="services" class="py-24 relative overflow-hidden bg-black z-10">
+		<!-- The Professional Choice Section -->
+		<section
+			id="services"
+			class="py-32 relative overflow-hidden bg-white z-10"
+		>
 			<div class="container mx-auto px-4 sm:px-6 relative z-10 max-w-7xl">
-				<div class="text-center mb-16">
-					<h2 class="text-3xl md:text-5xl lg:text-7xl font-black mb-6 text-[#FAF9F6] tracking-tighter uppercase">Why Choose Us</h2>
-					<p class="text-white/40 max-w-2xl mx-auto uppercase tracking-[0.4em] text-[0.65rem] font-bold">Superior Travel Experience</p>
+				<div class="max-w-3xl mb-20">
+					<p
+						class="text-xs uppercase tracking-[0.4em] text-primary mb-4 font-black"
+					>
+						Why RiderOne?
+					</p>
+					<h2
+						class="text-4xl md:text-6xl font-black mb-6 text-slate-900 tracking-tighter leading-none"
+					>
+						The Professional Choice.
+					</h2>
+					<p
+						class="text-slate-500 text-lg md:text-xl font-medium leading-relaxed"
+					>
+						We've redefined the private pickup experience in Accra.
+						Spacious, punctual, and exclusively tailored to your
+						schedule.
+					</p>
 				</div>
 
-				<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-y-16 gap-x-8 lg:gap-8">
-					{[
-						{ 
-							icon: Users, 
-							title: "Superior Comfort & Space", 
-							desc: "A 7-seater setup designed for families and groups. No more squeezing into small cars; enjoy ample legroom and a smooth, stable ride." 
-						},
-						{ 
-							icon: Briefcase, 
-							title: "Stress-Free Luggage Capacity", 
-							desc: "Designed for the traveler. Whether it's heavy airport suitcases or multiple equipment bags, our Voxy handles your gear with room to spare." 
-						},
-						{ 
-							icon: Wind, 
-							title: "Premium Climate Control", 
-							desc: "Escape the Accra heat. Experience a pristine, ice-cold, and fresh environment from the moment you step in until you reach your doorstep." 
-						},
-						{ 
-							icon: ShieldCheck, 
-							title: "Your Dedicated Chauffeur", 
-							desc: "This isn't an algorithm—it's a partnership. Enjoy punctual, door-to-door service from a professional driver who prioritizes your safety and schedule." 
-						}
-					].map(service => (
-						<div class="relative flex flex-col items-center md:items-start group">
-							<!-- Floating Icon -->
-							<div class="absolute -top-8 left-1/2 -translate-x-1/2 md:left-12 md:translate-x-0 z-20 rounded-2xl bg-white/5 border border-white/10 p-4 transition-all duration-500 group-hover:-translate-y-1">
-								<service.icon className="w-6 h-6 text-white/40 group-hover:text-white transition-colors" />
+				<div class="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16">
+					{
+						[
+							{
+								icon: Users,
+								title: "Superior Comfort & Space",
+								desc: "A 7-seater setup designed for families and groups. No more squeezing into small cars; enjoy ample legroom and a smooth, stable ride.",
+							},
+							{
+								icon: Briefcase,
+								title: "Stress-Free Luggage Capacity",
+								desc: "Designed for the traveler. Whether it's heavy airport suitcases or multiple equipment bags, our Voxy handles your gear with room to spare.",
+							},
+							{
+								icon: Wind,
+								title: "Premium Climate Control",
+								desc: "Escape the Accra heat. Experience a pristine, ice-cold, and fresh environment from the moment you step in until you reach your doorstep.",
+							},
+							{
+								icon: ShieldCheck,
+								title: "Your Dedicated Chauffeur",
+								desc: "This isn't an algorithm—it's a partnership. Enjoy punctual, door-to-door service from a professional driver who prioritizes your safety.",
+							},
+						].map((service) => (
+							<div class="group flex flex-col md:flex-row gap-8 items-start">
+								<div class="flex-shrink-0 rounded-3xl bg-slate-50 border border-slate-100 p-6 shadow-sm group-hover:bg-primary group-hover:border-primary transition-all duration-500">
+									<service.icon className="w-8 h-8 text-primary group-hover:text-white transition-colors" />
+								</div>
+								<div class="flex-1">
+									<h3 class="text-xl md:text-2xl font-bold mb-4 text-slate-900 tracking-tight">
+										{service.title}
+									</h3>
+									<p class="text-slate-500 text-base md:text-lg leading-relaxed font-medium">
+										{service.desc}
+									</p>
+								</div>
 							</div>
-
-							<!-- Feature Card -->
-							<div class="w-full p-8 pt-12 rounded-[2rem] bg-white/[0.03] border border-white/[0.08] backdrop-blur-xl hover:bg-white/[0.06] transition-all duration-300 flex flex-col items-center md:items-start text-center md:text-left shadow-2xl h-full">
-								<h3 class="text-lg md:text-xl font-bold mb-3 text-white tracking-tight">{service.title}</h3>
-								<p class="text-slate-400 text-sm leading-relaxed">{service.desc}</p>
-							</div>
-						</div>
-					))}
+						))
+					}
 				</div>
 			</div>
 		</section>
 
-		<!-- Meet Your Driver Section -->
-		<section id="about" class="py-24 relative overflow-hidden bg-black z-10">
-			<div class="container mx-auto px-4 sm:px-6 max-w-5xl relative z-10">
-				
-				<div class="text-center mb-16">
-					<p class="text-[0.65rem] uppercase tracking-[0.4em] text-white/30 mb-4 font-bold">Meet Your Driver</p>
-					<h2 class="text-3xl md:text-5xl lg:text-7xl font-black text-[#FAF9F6] tracking-tighter uppercase">Professional Chauffeur</h2>
+		<!-- Services Section: Bento Grid Visuals -->
+		<section id="offerings" class="py-32 bg-slate-950 text-white overflow-hidden relative">
+			<!-- Visual Watermark Effect -->
+			<div class="absolute -top-10 -right-20 text-[20vw] font-black text-white/[0.03] select-none pointer-events-none leading-none uppercase italic tracking-tighter">
+				Express
+			</div>
+
+			<div class="container mx-auto px-4 sm:px-6 relative z-10 max-w-7xl">
+				<div class="flex flex-col lg:flex-row lg:items-end justify-between gap-12 mb-20">
+					<div class="max-w-2xl">
+						<p class="text-[0.6rem] uppercase tracking-[0.4em] text-primary mb-6 font-black font-mono">Bespoke Solutions</p>
+						<h2 class="text-4xl md:text-8xl font-black tracking-tighter leading-[0.85] uppercase italic">
+							Our <span class="text-primary italic">Core</span><br/>Services.
+						</h2>
+					</div>
+					<div class="lg:mb-4 max-w-sm">
+						<p class="text-slate-400 text-lg font-medium leading-normal">
+							From KIA Airport runs to exclusive day-hires, we've structured our fleet for reliability and executive comfort.
+						</p>
+					</div>
 				</div>
 
-				<div class="flex flex-col md:flex-row items-center gap-10 md:gap-16">
+				<!-- Bento Grid Layout -->
+				<div class="grid grid-cols-1 md:grid-cols-6 gap-6 auto-rows-[300px] md:auto-rows-[340px]">
 					
+					<!-- 01. Airport Transfers (Main Highlight) -->
+					<div class="md:col-span-4 md:row-span-2 group">
+						<MagicCard className="h-full rounded-[3.5rem] overflow-hidden bg-slate-900 border-white/5" gradientColor="rgba(59, 130, 246, 0.1)">
+							<div class="relative h-full flex flex-col p-10 md:p-14 justify-between border border-white/10 rounded-[3.5rem]">
+								<div class="absolute inset-0 z-0">
+									<img src="/images/service_airport.png" alt="Airport Transfers" class="w-full h-full object-cover opacity-60 grayscale group-hover:grayscale-0 transition-all duration-700 scale-110 group-hover:scale-100" />
+									<div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
+								</div>
+								
+								<div class="relative z-10 flex justify-between items-start">
+									<div class="bg-primary px-5 py-2 rounded-full text-[10px] font-black uppercase tracking-widest shadow-xl shadow-primary/20">Popular Choice</div>
+									<span class="text-white/20 text-7xl font-black italic tracking-tighter select-none">01</span>
+								</div>
+
+								<div class="relative z-10">
+									<h3 class="text-4xl md:text-6xl font-black tracking-tight mb-4 leading-none italic uppercase">✈️ Airport <br/>Pickup & Drop</h3>
+									<p class="text-slate-400 text-lg md:text-xl font-medium max-w-md mb-8">Professional KIA Terminal 3 service with live flight tracking. We wait, even if you are delayed.</p>
+									<a href="#booking" class="inline-flex items-center gap-4 text-primary font-black uppercase tracking-widest text-xs group/link">
+										Book Airport Run <ChevronRight className="w-4 h-4 group-hover/link:translate-x-2 transition-transform" />
+									</a>
+								</div>
+							</div>
+						</MagicCard>
+					</div>
+
+					<!-- 02. Executive Travel (Small Box) -->
+					<div class="md:col-span-2 md:row-span-1 group">
+						<MagicCard className="h-full rounded-[3rem] overflow-hidden bg-slate-900 border-white/5" gradientColor="rgba(59, 130, 246, 0.05)">
+							<div class="relative h-full flex flex-col p-8 justify-between border border-white/10 rounded-[3rem]">
+								<div class="absolute inset-0 z-0">
+									<img src="/images/service_corporate.png" alt="Executive Travel" class="w-full h-full object-cover opacity-40 grayscale group-hover:grayscale-0 transition-all duration-700" />
+									<div class="absolute inset-0 bg-slate-950/60 transition-opacity group-hover:opacity-40"></div>
+								</div>
+								
+								<div class="relative z-10">
+									<div class="bg-white/10 w-fit p-3 rounded-2xl backdrop-blur-md border border-white/10 mb-6">
+										<Briefcase className="w-6 h-6 text-primary" />
+									</div>
+									<h3 class="text-2xl font-black tracking-tight mb-2 uppercase italic leading-none">💼 Executive &<br/>Corporate</h3>
+									<p class="text-slate-400 text-sm font-medium">Quiet cabin. Punctual driver. Discreet service.</p>
+								</div>
+							</div>
+						</MagicCard>
+					</div>
+
+					<!-- 03. Inter-City (Small Box) -->
+					<div class="md:col-span-2 md:row-span-1 group">
+						<MagicCard className="h-full rounded-[3rem] overflow-hidden bg-slate-900 border-white/5" gradientColor="rgba(59, 130, 246, 0.05)">
+							<div class="relative h-full flex flex-col p-8 justify-between border border-white/10 rounded-[3rem]">
+								<div class="absolute inset-0 z-0">
+									<img src="/images/service_intercity.png" alt="Inter-City Trips" class="w-full h-full object-cover opacity-40 grayscale group-hover:grayscale-0 transition-all duration-700" />
+									<div class="absolute inset-0 bg-slate-950/60 transition-opacity group-hover:opacity-40"></div>
+								</div>
+								
+								<div class="relative z-10">
+									<div class="bg-white/10 w-fit p-3 rounded-2xl backdrop-blur-md border border-white/10 mb-6">
+										<Wind className="w-6 h-6 text-primary" />
+									</div>
+									<h3 class="text-2xl font-black tracking-tight mb-2 uppercase italic leading-none">🌅 Tema &<br/>Inter-City</h3>
+									<p class="text-slate-400 text-sm font-medium">Safe highway cruising between major nodes.</p>
+								</div>
+							</div>
+						</MagicCard>
+					</div>
+
+					<!-- 04. Family & Groups (Wide Footer) -->
+					<div class="md:col-span-6 md:row-span-1 group">
+						<MagicCard className="h-full rounded-[3.5rem] overflow-hidden bg-slate-900 border-white/5" gradientColor="rgba(59, 130, 246, 0.05)">
+							<div class="relative h-full flex flex-col md:flex-row p-10 md:p-14 md:items-center justify-between border border-white/10 rounded-[3.5rem]">
+								<div class="absolute inset-0 z-0">
+									<img src="/images/service_family.png" alt="Family Outings" class="w-full h-full object-cover opacity-40 grayscale group-hover:grayscale-0 transition-all duration-700" />
+									<div class="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/60 to-transparent"></div>
+								</div>
+								
+								<div class="relative z-10 flex flex-col gap-4">
+									<div class="flex items-center gap-4 text-primary mb-2">
+										<Users className="w-8 h-8" />
+										<span class="text-5xl font-black italic tracking-tighter uppercase select-none opacity-20">04</span>
+									</div>
+									<h3 class="text-4xl md:text-5xl font-black tracking-tight leading-none uppercase italic">👨‍👩‍👧‍👦 Family & Group <span class="text-primary italic">Hire.</span></h3>
+									<p class="text-slate-400 text-base md:text-lg font-medium max-w-xl">
+										Funeral delegations, wedding shuttles, or weekend getaways. Our 7-seater Voxy is designed for cargo and crowds.
+									</p>
+								</div>
+
+								<div class="relative z-10 mt-8 md:mt-0 flex flex-col gap-4 items-center">
+									<div class="text-center">
+										<p class="text-slate-500 text-[10px] font-black uppercase tracking-widest mb-2">Space for up to</p>
+										<p class="text-4xl font-black text-white leading-none tracking-tighter">7 SEATS</p>
+									</div>
+									<a href="#booking" class="bg-white text-slate-950 px-8 py-4 rounded-full font-black text-xs uppercase tracking-widest hover:bg-primary hover:text-white transition-all shadow-2xl">Check Availability</a>
+								</div>
+							</div>
+						</MagicCard>
+					</div>
+
+				</div>
+			</div>
+		</section>
+
+		<!-- How it Works: The Seamless Journey -->
+		<section id="process" class="py-32 bg-white relative z-10 overflow-hidden">
+			<!-- Abstract Path Graphics -->
+			<div class="absolute top-1/2 left-0 w-full h-px bg-slate-100 -translate-y-1/2 z-0 hidden lg:block"></div>
+			
+			<div class="container mx-auto px-4 sm:px-6 relative z-10 max-w-7xl">
+				<div class="text-center mb-24">
+					<p class="text-[0.65rem] uppercase tracking-[0.4em] text-primary mb-4 font-black">Simple & Stress-Free</p>
+					<h2 class="text-4xl md:text-7xl font-black text-slate-900 tracking-tighter leading-none italic uppercase">Your <span class="text-primary italic">Seamless</span> Journey</h2>
+				</div>
+
+				<div class="grid grid-cols-1 md:grid-cols-3 gap-16 lg:gap-24 relative">
+					{/* Step 01 */}
+					<div class="relative group">
+						<div class="bg-slate-50 border border-slate-100 rounded-[3rem] p-12 text-center shadow-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 relative z-10">
+							<div class="w-20 h-20 bg-primary/5 rounded-3xl flex items-center justify-center mx-auto mb-10 group-hover:bg-primary group-hover:rotate-12 transition-all duration-500 shadow-xl shadow-primary/5">
+								<MessageCircle className="w-10 h-10 text-primary group-hover:text-white transition-colors" />
+							</div>
+							<span class="absolute top-8 right-12 text-5xl font-black text-slate-100 italic group-hover:text-primary/10 transition-colors">01</span>
+							<h3 class="text-2xl font-black text-slate-900 mb-6 uppercase italic tracking-tight">Request <br/>Your Ride</h3>
+							<p class="text-slate-500 font-medium leading-relaxed">Fill out our 60-second booking form or reach out directly on WhatsApp with your pickup details.</p>
+						</div>
+					</div>
+
+					{/* Step 02 */}
+					<div class="relative group">
+						<div class="bg-slate-50 border border-slate-100 rounded-[3rem] p-12 text-center shadow-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 relative z-10">
+							<div class="w-20 h-20 bg-primary/5 rounded-3xl flex items-center justify-center mx-auto mb-10 group-hover:bg-primary group-hover:-rotate-6 transition-all duration-500 shadow-xl shadow-primary/5">
+								<ShieldCheck className="w-10 h-10 text-primary group-hover:text-white transition-colors" />
+							</div>
+							<span class="absolute top-8 right-12 text-5xl font-black text-slate-100 italic group-hover:text-primary/10 transition-colors">02</span>
+							<h3 class="text-2xl font-black text-slate-900 mb-6 uppercase italic tracking-tight">Instant <br/>Confirmation</h3>
+							<p class="text-slate-500 font-medium leading-relaxed">Receive a direct quote and your personal driver's details. No hidden fees or surprises at the end of the trip.</p>
+						</div>
+					</div>
+
+					{/* Step 03 */}
+					<div class="relative group">
+						<div class="bg-slate-50 border border-slate-100 rounded-[3rem] p-12 text-center shadow-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 relative z-10">
+							<div class="w-20 h-20 bg-primary/5 rounded-3xl flex items-center justify-center mx-auto mb-10 group-hover:bg-primary group-hover:rotate-6 transition-all duration-500 shadow-xl shadow-primary/5">
+								<Car className="w-10 h-10 text-primary group-hover:text-white transition-colors" />
+							</div>
+							<span class="absolute top-8 right-12 text-5xl font-black text-slate-100 italic group-hover:text-primary/10 transition-colors">03</span>
+							<h3 class="text-2xl font-black text-slate-900 mb-6 uppercase italic tracking-tight">Relax <br/>& Enjoy</h3>
+							<p class="text-slate-500 font-medium leading-relaxed">Meet your driver, enjoy the ice-cold climate control, and experience the safest, most comfortable ride in Ghana.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Testimonials Section (Recommendation 2) -->
+		<section
+			class="py-32 bg-slate-50 border-y border-slate-100 overflow-hidden"
+		>
+			<div class="container mx-auto px-4 mb-20 text-center relative z-10">
+				<p
+					class="text-[0.65rem] uppercase tracking-[0.4em] text-primary mb-4 font-black"
+				>
+					Success Stories
+				</p>
+				<h2
+					class="text-4xl md:text-6xl font-black text-slate-900 tracking-tighter italic uppercase"
+				>
+					Trusted by <span class="text-primary italic">1000+</span> Riders
+				</h2>
+			</div>
+
+			<div class="relative max-w-7xl mx-auto">
+				<TestimonialsCarousel client:load />
+			</div>
+		</section>
+
+		<!-- Meet Your Driver Section -->
+		<section
+			id="about"
+			class="py-32 relative overflow-hidden bg-white z-10"
+		>
+			<div class="container mx-auto px-4 sm:px-6 max-w-6xl relative z-10">
+				<div
+					class="flex flex-col lg:flex-row items-center gap-16 lg:gap-24"
+				>
 					<!-- Driver Photo -->
-					<div class="w-full max-w-xs md:max-w-sm flex-shrink-0">
+					<div class="w-full max-w-md flex-shrink-0">
 						<div class="relative group">
-							<div class="absolute -inset-2 bg-white/[0.02] rounded-3xl blur-2xl group-hover:bg-white/[0.04] transition-all duration-700"></div>
-							<div class="relative overflow-hidden rounded-3xl border border-white/10">
-								<img 
-									src="/images/driver.png" 
-									alt="Your personal driver in Accra" 
-									class="w-full h-auto object-cover aspect-[4/5] transition-transform duration-700 group-hover:scale-105"
+							<div
+								class="absolute -inset-4 bg-primary/5 rounded-[4rem] blur-xl opacity-60"
+							>
+							</div>
+							<div
+								class="relative overflow-hidden rounded-[3.5rem] border border-slate-200 shadow-2xl bg-white"
+							>
+								<img
+									src="/images/driver.png"
+									alt="Your personal driver in Accra"
+									class="w-full h-auto object-cover aspect-[4/5] opacity-90 transition-transform duration-1000 group-hover:scale-105"
 								/>
-								<!-- Subtle bottom gradient -->
-								<div class="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/60 to-transparent pointer-events-none"></div>
 							</div>
 						</div>
 					</div>
 
 					<!-- Driver Info -->
-					<div class="flex-1 text-center md:text-left">
-						<p class="text-slate-300 text-base sm:text-lg leading-relaxed mb-8">
-							With over <span class="text-white font-semibold">15 years</span> of experience on Ghana's roads, 
-							I provide a safe, punctual, and comfortable experience for families and travelers. 
-							Whether it's a quick trip to <span class="text-white font-semibold">Tema</span>, 
-							an <span class="text-white font-semibold">airport pickup</span>, or a corporate transfer — 
-							you're in good hands.
+					<div class="flex-1 text-center lg:text-left">
+						<p
+							class="text-xs uppercase tracking-[0.4em] text-primary mb-6 font-black"
+						>
+							Your Partner on the Road
+						</p>
+						<h2
+							class="text-4xl md:text-6xl font-black text-slate-900 tracking-tighter leading-none mb-8"
+						>
+							Personalized Service, Local Expertise.
+						</h2>
+
+						<p
+							class="text-slate-600 text-lg md:text-xl leading-relaxed mb-10 font-medium"
+						>
+							With over <span class="text-primary font-bold"
+								>15 years</span
+							> of experience on Ghana's roads, I provide a safe, punctual,
+							and comfortable experience for families and travelers.
+							Whether it's <span class="text-slate-900 font-bold"
+								>Tema</span
+							>,
+							<span class="text-slate-900 font-bold"
+								>KIA Airport</span
+							>, or corporate transfers — you're in expert hands.
 						</p>
 
 						<!-- Trust Badges -->
-						<div class="flex flex-wrap justify-center md:justify-start gap-4 mb-8">
-							<div class="flex items-center gap-2 bg-white/[0.05] border border-white/[0.1] rounded-full px-4 py-2">
-								<ShieldCheck className="w-4 h-4 text-white/80" />
-								<span class="text-sm text-slate-200 font-medium">Owner-Operated</span>
+						<div
+							class="flex flex-wrap justify-center lg:justify-start gap-4 mb-12"
+						>
+							<div
+								class="flex items-center gap-3 bg-white border border-slate-200 rounded-2xl px-6 py-3 shadow-sm"
+							>
+								<ShieldCheck className="w-5 h-5 text-primary" />
+								<span
+									class="text-sm text-slate-700 font-bold tracking-tight"
+									>Owner-Operated</span
+								>
 							</div>
-							<div class="flex items-center gap-2 bg-white/[0.05] border border-white/[0.1] rounded-full px-4 py-2">
-								<Star className="w-4 h-4 text-white/80" />
-								<span class="text-sm text-slate-200 font-medium">Verified Driver</span>
-							</div>
-							<div class="flex items-center gap-2 bg-white/[0.05] border border-white/[0.1] rounded-full px-4 py-2">
-								<Heart className="w-4 h-4 text-white/80" />
-								<span class="text-sm text-slate-200 font-medium">Family Friendly</span>
+							<div
+								class="flex items-center gap-3 bg-white border border-slate-200 rounded-2xl px-6 py-3 shadow-sm"
+							>
+								<Star className="w-5 h-5 text-primary" />
+								<span
+									class="text-sm text-slate-700 font-bold tracking-tight"
+									>Verified Driver</span
+								>
 							</div>
 						</div>
 
 						<!-- Stats row -->
-						<div class="grid grid-cols-3 gap-4 max-w-md mx-auto md:mx-0">
-							<div class="text-center md:text-left">
-								<p class="text-2xl md:text-3xl font-bold text-white">15+</p>
-								<p class="text-xs text-slate-500 uppercase tracking-wider mt-1">Years Experience</p>
+						<div
+							class="grid grid-cols-3 gap-8 max-w-md mx-auto lg:mx-0"
+						>
+							<div>
+								<p
+									class="text-4xl md:text-5xl font-black text-slate-900 tracking-tighter"
+								>
+									15+
+								</p>
+								<p
+									class="text-[10px] text-slate-400 uppercase tracking-widest font-black mt-2"
+								>
+									Years Exp.
+								</p>
 							</div>
-							<div class="text-center md:text-left">
-								<p class="text-2xl md:text-3xl font-bold text-white">5K+</p>
-								<p class="text-xs text-slate-500 uppercase tracking-wider mt-1">Trips Completed</p>
+							<div>
+								<p
+									class="text-4xl md:text-5xl font-black text-slate-900 tracking-tighter"
+								>
+									5K+
+								</p>
+								<p
+									class="text-[10px] text-slate-400 uppercase tracking-widest font-black mt-2"
+								>
+									Trips Done
+								</p>
 							</div>
-							<div class="text-center md:text-left">
-								<p class="text-2xl md:text-3xl font-bold text-white">4.9</p>
-								<p class="text-xs text-slate-500 uppercase tracking-wider mt-1">Rating</p>
+							<div>
+								<p
+									class="text-4xl md:text-5xl font-black text-slate-900 tracking-tighter"
+								>
+									4.9
+								</p>
+								<p
+									class="text-[10px] text-slate-400 uppercase tracking-widest font-black mt-2"
+								>
+									Rating
+								</p>
 							</div>
 						</div>
 					</div>
-
 				</div>
 			</div>
 		</section>
 
-		<!-- Booking Form Section -->
-		<div class="relative bg-black z-20">
-			<BookingForm client:load />
+		<!-- FAQ Section (Recommendation 5) -->
+		<section class="py-32 bg-slate-50 border-t border-slate-100">
+			<div class="container mx-auto px-4 max-w-4xl">
+				<div class="text-center mb-16">
+					<p
+						class="text-xs uppercase tracking-[0.4em] text-primary mb-4 font-black"
+					>
+						Common Queries
+					</p>
+					<h2
+						class="text-4xl md:text-6xl font-black text-slate-900 tracking-tighter italic uppercase"
+					>
+						Questions? <span class="text-slate-300">Answers.</span>
+					</h2>
+				</div>
+
+				<div class="space-y-6">
+					{
+						[
+							{
+								q: "What areas do you cover?",
+								a: "We primarily cover Accra and Tema, including 24/7 KIA Airport pickups and drop-offs. We also cater to long-distance trips within the Greater Accra region upon request.",
+							},
+							{
+								q: "How many passengers and bags can fit?",
+								a: "Our Toyota Voxy is a 7-seater setup. For maximum comfort, we recommend up to 6 passengers or 4-5 passengers with 6+ large suitcases and carry-ons.",
+							},
+							{
+								q: "Is the pricing fixed or metered?",
+								a: "We provide fixed-price quotes based on your pickup and destination. This ensures there are no surprises due to traffic or route changes.",
+							},
+							{
+								q: "How do I book for an airport pickup?",
+								a: "Simply fill out the booking form or contact us on WhatsApp with your flight number. We track your flight live to ensure we are waiting for you, even if your flight is delayed.",
+							},
+						].map((faq, index) => (
+							<details class="group bg-white border border-slate-100 rounded-[2rem] p-8 shadow-sm open:shadow-md transition-all">
+								<summary class="flex items-center justify-between cursor-pointer list-none">
+									<h3 class="text-lg md:text-xl font-bold text-slate-900 tracking-tight">
+										{faq.q}
+									</h3>
+									<div class="bg-slate-50 p-2 rounded-full group-open:rotate-180 transition-transform">
+										<ChevronRight className="w-5 h-5 text-slate-400" />
+									</div>
+								</summary>
+								<div class="mt-6 text-slate-500 font-medium leading-relaxed">
+									{faq.a}
+								</div>
+							</details>
+						))
+					}
+				</div>
+			</div>
+		</section>
+
+		<!-- Booking Form Section (Recommendation 6 Refinement) -->
+		<div
+			id="booking"
+			class="relative bg-white z-20 py-32 border-t border-slate-100 overflow-hidden"
+		>
+			<!-- Subtle Background Icon -->
+			<div
+				class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-[0.02] pointer-events-none"
+			>
+				<Car className="w-[600px] h-[600px] -rotate-12" />
+			</div>
+
+			<div class="container mx-auto px-4 flex flex-col items-center">
+				<div class="text-center mb-16 max-w-2xl relative z-10">
+					<div
+						class="inline-flex items-center gap-2 bg-primary/5 text-primary px-4 py-2 rounded-full mb-6"
+					>
+						<Zap className="w-4 h-4 fill-primary" />
+						<span
+							class="text-[0.6rem] font-black uppercase tracking-widest"
+							>Instant WhatsApp Quote</span
+						>
+					</div>
+					<h2
+						class="text-4xl md:text-7xl font-black text-slate-900 tracking-tighter leading-none mb-6 italic uppercase"
+					>
+						Ready for a <br /> Stress-Free Ride?
+					</h2>
+					<p
+						class="text-slate-500 text-lg md:text-xl font-medium leading-relaxed"
+					>
+						No commitment, just professional service. Secure your
+						spot and get an instant quote directly from your driver.
+					</p>
+				</div>
+
+				<div class="w-full max-w-4xl">
+					<BookingForm client:load />
+				</div>
+			</div>
 		</div>
 	</main>
 
-	<footer class="bg-black border-t border-white/5 py-16 relative z-10">
+	<footer class="bg-slate-950 py-20 relative z-10 text-white">
 		<div class="container mx-auto px-4 text-center">
-			<div class="flex items-center justify-center gap-2 mb-8 group">
-				<Car className="w-5 h-5 text-white/40 transition-transform group-hover:scale-110" />
-				<span class="text-lg font-black tracking-widest text-white/80 uppercase">RiderOne</span>
+			<div class="flex items-center justify-center gap-3 mb-10 group">
+				<Car
+					className="w-8 h-8 text-primary transition-transform group-hover:rotate-12"
+				/>
+				<span class="text-3xl font-black tracking-tighter"
+					>RiderOne</span
+				>
 			</div>
-			<p class="text-white/20 text-[0.65rem] uppercase tracking-[0.2em] mb-10">© 2026 RiderOne Pickup Service. All rights reserved.</p>
-			<div class="flex justify-center gap-10">
-				<a href="#" class="text-white/20 hover:text-white transition-colors text-[0.65rem] uppercase tracking-widest">Privacy Policy</a>
-				<a href="#" class="text-white/20 hover:text-white transition-colors text-[0.65rem] uppercase tracking-widest">Terms of Service</a>
+			<p
+				class="text-slate-400 text-lg mb-12 max-w-md mx-auto font-medium"
+			>
+				Reliable, spacious, and professional car pickup services across
+				Accra and Tema since 2011.
+			</p>
+
+			<div class="flex flex-wrap justify-center gap-x-12 gap-y-6 mb-12">
+				<a
+					href="#"
+					class="text-slate-400 hover:text-white transition-colors text-xs font-black uppercase tracking-[0.3em]"
+					>Privacy</a
+				>
+				<a
+					href="#"
+					class="text-slate-400 hover:text-white transition-colors text-xs font-black uppercase tracking-[0.3em]"
+					>Terms</a
+				>
+				<a
+					href="#booking"
+					class="text-primary hover:underline text-xs font-black uppercase tracking-[0.3em]"
+					>Book Now</a
+				>
+			</div>
+
+			<div
+				class="pt-12 border-t border-white/5 text-slate-600 text-[10px] font-black uppercase tracking-[0.4em]"
+			>
+				© 2026 RiderOne Pickup Service. Accra, Ghana.
 			</div>
 		</div>
 	</footer>

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Calendar, MapPin, Clock, Users, Send } from 'lucide-react';
+import { Calendar, MapPin, Clock, Users, Send, ShieldCheck, Zap, Sparkles, MessageCircle } from 'lucide-react';
+import { ShineBorder } from './ui/shine-border';
 
 const BookingForm: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -12,8 +13,6 @@ const BookingForm: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Construct the professional message for WhatsApp
     const message = `Hello RiderOne! I'd like to book a ride.%0A%0A` +
                     `📍 *Pickup:* ${formData.pickup}%0A` +
                     `🏁 *Destination:* ${formData.destination}%0A` +
@@ -22,124 +21,156 @@ const BookingForm: React.FC = () => {
                     `👥 *Passengers:* ${formData.passengers}%0A%0A` +
                     `Please confirm if you are available!`;
 
-    // Dad's WhatsApp Number
     const phoneNumber = "233263259860";
-    
-    // Redirect to WhatsApp
     window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
   };
 
   return (
-    <section id="booking" className="py-24 relative overflow-hidden bg-black z-20">
-      <div className="container mx-auto px-4 sm:px-6 relative z-10 max-w-5xl">
-        <div className="bg-white/[0.03] border border-white/[0.08] backdrop-blur-2xl rounded-[2.5rem] p-8 md:p-14 shadow-2xl relative overflow-hidden text-center">
-          <div className="absolute inset-0 bg-gradient-to-b from-white/[0.02] to-transparent pointer-events-none"></div>
-          
-          <div className="mb-10 relative z-10">
-            <h2 className="text-3xl md:text-5xl font-bold mb-4 text-white tracking-tight">Ready to Book Your Ride?</h2>
-            <p className="text-slate-400 text-sm md:text-base max-w-lg mx-auto">Fill in your details below and we'll finalize your booking instantly on WhatsApp.</p>
+    <ShineBorder 
+      className="relative w-full rounded-[4rem] bg-slate-50 border border-slate-200 shadow-3xl overflow-hidden"
+      color={["#25D366", "#3B82F6", "#A855F7", "#F97316"]}
+      borderWidth={2}
+      duration={14}
+    >
+      <div className="flex flex-col lg:flex-row items-stretch min-h-[600px]">
+        
+        {/* Left Column: Form Content */}
+        <div className="flex-1 p-8 md:p-16 lg:p-20 text-left">
+          <div className="mb-12">
+            <div className="inline-flex items-center gap-2 bg-primary/5 text-primary px-4 py-2 rounded-full mb-6">
+              <Sparkles className="w-4 h-4 fill-primary" />
+              <span className="text-[0.65rem] font-black uppercase tracking-widest">Premium Service Reservation</span>
+            </div>
+            <h2 className="text-4xl md:text-6xl font-black mb-6 text-slate-900 tracking-tighter leading-none italic uppercase">
+              Ready to <span className="text-primary italic">Secure</span> Your Ride?
+            </h2>
+            <p className="text-slate-500 text-lg md:text-xl font-medium leading-relaxed max-w-xl">
+              Fill in your itinerary details. Your dedicated chauffeur will finalize the pickup coordinates instantly on WhatsApp.
+            </p>
           </div>
 
-          <form onSubmit={handleSubmit} className="relative z-10 flex flex-col items-center">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6 w-full max-w-4xl mb-12">
-              
-              {/* Pickup */}
+          <form onSubmit={handleSubmit} className="flex flex-col items-start w-full">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-8 w-full mb-12">
               <div className="relative flex flex-col items-start w-full group">
-                <label className="block text-xs font-semibold mb-2 pl-1 text-cyan-400 uppercase tracking-widest">Pickup Location</label>
+                <label className="block text-[0.65rem] font-black mb-2 pl-1 text-slate-400 uppercase tracking-[0.2em]">Pickup Location</label>
                 <div className="relative w-full">
                   <input 
-                    type="text" 
-                    required
-                    placeholder="e.g. KIA Airport, East Legon"
-                    className="w-full bg-white/[0.04] border border-white/[0.1] text-white placeholder-slate-600 rounded-2xl py-4 px-5 focus:outline-none focus:ring-2 focus:ring-cyan-500/30 focus:border-cyan-500/50 transition-all text-sm shadow-inner"
+                    type="text" required placeholder="e.g. KIA Airport, East Legon"
+                    className="w-full bg-white border border-slate-100 text-slate-900 placeholder-slate-300 rounded-3xl py-5 px-6 focus:outline-none focus:ring-4 focus:ring-primary/5 focus:border-primary transition-all text-base shadow-sm font-medium"
                     value={formData.pickup}
                     onChange={(e) => setFormData({...formData, pickup: e.target.value})}
                   />
-                  <MapPin className="absolute right-5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 group-focus-within:text-cyan-400 transition-colors" />
+                  <MapPin className="absolute right-6 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-300 group-focus-within:text-primary transition-colors" />
                 </div>
               </div>
 
-              {/* Destination */}
               <div className="relative flex flex-col items-start w-full group">
-                <label className="block text-xs font-semibold mb-2 pl-1 text-cyan-400 uppercase tracking-widest">Destination</label>
+                <label className="block text-[0.65rem] font-black mb-2 pl-1 text-slate-400 uppercase tracking-[0.2em]">Final Destination</label>
                 <div className="relative w-full">
                   <input 
-                    type="text" 
-                    required
-                    placeholder="e.g. Tema Community 1, Osu"
-                    className="w-full bg-white/[0.04] border border-white/[0.1] text-white placeholder-slate-600 rounded-2xl py-4 px-5 focus:outline-none focus:ring-2 focus:ring-cyan-500/30 focus:border-cyan-500/50 transition-all text-sm shadow-inner"
+                    type="text" required placeholder="e.g. Tema Community 1, Osu"
+                    className="w-full bg-white border border-slate-100 text-slate-900 placeholder-slate-300 rounded-3xl py-5 px-6 focus:outline-none focus:ring-4 focus:ring-primary/5 focus:border-primary transition-all text-base shadow-sm font-medium"
                     value={formData.destination}
                     onChange={(e) => setFormData({...formData, destination: e.target.value})}
                   />
-                  <Send className="absolute right-5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 group-focus-within:text-cyan-400 transition-colors" />
+                  <Send className="absolute right-6 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-300 group-focus-within:text-primary transition-colors" />
                 </div>
               </div>
 
-              {/* Date */}
               <div className="relative flex flex-col items-start w-full group">
-                <label className="block text-xs font-semibold mb-2 pl-1 text-cyan-400 uppercase tracking-widest">Pickup Date</label>
+                <label className="block text-[0.65rem] font-black mb-2 pl-1 text-slate-400 uppercase tracking-[0.2em]">Preferred Date</label>
                 <div className="relative w-full">
                   <input 
-                    type="date" 
-                    required
-                    className="w-full bg-white/[0.04] border border-white/[0.1] text-white rounded-2xl py-4 pl-5 pr-12 focus:outline-none focus:ring-2 focus:ring-cyan-500/30 focus:border-cyan-500/50 transition-all text-sm shadow-inner appearance-none"
+                    type="date" required
+                    className="w-full bg-white border border-slate-100 text-slate-900 rounded-3xl py-5 pl-6 pr-12 focus:outline-none focus:ring-4 focus:ring-primary/5 focus:border-primary transition-all text-base shadow-sm font-medium appearance-none"
                     value={formData.date}
                     onChange={(e) => setFormData({...formData, date: e.target.value})}
-                    style={{ colorScheme: 'dark' }}
                   />
-                  <Calendar className="absolute right-5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 group-focus-within:text-cyan-400 transition-colors" />
+                  <Calendar className="absolute right-6 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-300 group-focus-within:text-primary transition-colors" />
                 </div>
               </div>
 
-              {/* Time & Passengers Grid */}
-              <div className="grid grid-cols-2 gap-4 w-full">
+              <div className="grid grid-cols-2 gap-6 w-full">
                 <div className="relative flex flex-col items-start w-full group">
-                  <label className="block text-xs font-semibold mb-2 pl-1 text-cyan-400 uppercase tracking-widest">Time</label>
+                  <label className="block text-[0.65rem] font-black mb-2 pl-1 text-slate-400 uppercase tracking-[0.2em]">Time</label>
                   <div className="relative w-full">
                     <input 
-                      type="time" 
-                      required
-                      className="w-full bg-white/[0.04] border border-white/[0.1] text-white rounded-2xl py-4 px-5 focus:outline-none focus:ring-2 focus:ring-cyan-500/30 focus:border-cyan-500/50 transition-all text-sm shadow-inner"
+                      type="time" required
+                      className="w-full bg-white border border-slate-100 text-slate-900 rounded-3xl py-5 px-6 focus:outline-none focus:ring-4 focus:ring-primary/5 focus:border-primary transition-all text-base shadow-sm font-medium"
                       value={formData.time}
                       onChange={(e) => setFormData({...formData, time: e.target.value})}
-                      style={{ colorScheme: 'dark' }}
                     />
-                    <Clock className="absolute right-5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 group-focus-within:text-cyan-400 transition-colors" />
                   </div>
                 </div>
                 <div className="relative flex flex-col items-start w-full group">
-                  <label className="block text-xs font-semibold mb-2 pl-1 text-cyan-400 uppercase tracking-widest">Passengers</label>
+                  <label className="block text-[0.65rem] font-black mb-2 pl-1 text-slate-400 uppercase tracking-[0.2em]">Guests</label>
                   <div className="relative w-full">
                     <select 
-                      className="w-full bg-white/[0.04] border border-white/[0.1] text-white rounded-2xl py-4 px-5 focus:outline-none focus:ring-2 focus:ring-cyan-500/30 focus:border-cyan-500/50 transition-all text-sm shadow-inner appearance-none cursor-pointer"
+                      className="w-full bg-white border border-slate-100 text-slate-900 rounded-3xl py-5 px-6 focus:outline-none focus:ring-4 focus:ring-primary/5 focus:border-primary transition-all text-base shadow-sm font-medium appearance-none cursor-pointer"
                       value={formData.passengers}
                       onChange={(e) => setFormData({...formData, passengers: e.target.value})}
                     >
                       {[1,2,3,4,5,6,7].map(num => (
-                        <option key={num} value={num} className="bg-slate-900 text-white">{num}</option>
+                        <option key={num} value={num}>{num} Pax</option>
                       ))}
                     </select>
-                    <Users className="absolute right-5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 group-focus-within:text-cyan-400 transition-colors" />
+                    <Users className="absolute right-6 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-300 group-focus-within:text-primary transition-colors" />
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* The Unified WhatsApp Button */}
             <button 
               type="submit"
-              className="flex items-center gap-4 bg-[#25D366] text-black px-12 py-5 rounded-full hover:bg-[#128C7E] hover:scale-[1.02] transition-all duration-300 font-bold text-lg shadow-[0_0_30px_rgba(37,211,102,0.3)] hover:shadow-[0_0_40px_rgba(37,211,102,0.5)] group"
+              className="w-full md:w-auto flex items-center justify-center gap-6 bg-[#25D366] text-white px-20 py-6 rounded-full hover:bg-[#128C7E] hover:scale-[1.03] transition-all duration-500 font-black text-xl shadow-2xl hover:shadow-green-500/20 group"
             >
-              <svg viewBox="0 0 24 24" className="w-6 h-6 fill-current" xmlns="http://www.w3.org/2000/svg">
-                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
-              </svg>
-              <span>Book via WhatsApp Now</span>
+              <MessageCircle className="w-7 h-7 fill-white/20" />
+              <span>Reserve via WhatsApp</span>
             </button>
-            <p className="mt-4 text-slate-500 text-xs font-medium uppercase tracking-[0.2em]">Punctual & Reliable • Response in Minutes</p>
+            <p className="mt-8 text-slate-400 text-[10px] font-black uppercase tracking-[0.4em] flex items-center gap-3">
+              <ShieldCheck className="w-4 h-4 text-primary" />
+              Secured & Punctual Service • No Pre-payment Required
+            </p>
           </form>
         </div>
+
+        {/* Right Column: Benefits Sidebar */}
+        <div className="hidden lg:flex w-1/3 bg-slate-100/50 border-l border-slate-200 p-16 flex-col justify-center gap-10">
+          <div className="flex flex-col gap-3">
+            <div className="bg-primary/10 p-4 rounded-2xl w-fit">
+              <Zap className="w-8 h-8 text-primary" />
+            </div>
+            <h4 className="text-2xl font-black text-slate-900 tracking-tight">Why Book Now?</h4>
+            <p className="text-slate-500 font-medium leading-relaxed">Secure your slot today with zero commitment fees. We prioritize safety and punctuality for every ride.</p>
+          </div>
+          
+          <div className="space-y-6">
+            <div className="flex items-start gap-4">
+              <div className="w-2 h-2 rounded-full bg-primary mt-2" />
+              <div>
+                <h5 className="font-bold text-slate-900 uppercase text-[0.65rem] tracking-widest mb-1">Live Tracking</h5>
+                <p className="text-slate-500 text-sm leading-snug">We monitor your flight or arrival time automatically.</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-4">
+              <div className="w-2 h-2 rounded-full bg-primary mt-2" />
+              <div>
+                <h5 className="font-bold text-slate-900 uppercase text-[0.65rem] tracking-widest mb-1">Elite Comfort</h5>
+                <p className="text-slate-500 text-sm leading-snug">Spacious leather seating and premium climate control.</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-4">
+              <div className="w-2 h-2 rounded-full bg-primary mt-2" />
+              <div>
+                <h5 className="font-bold text-slate-900 uppercase text-[0.65rem] tracking-widest mb-1">No Surprises</h5>
+                <p className="text-slate-500 text-sm leading-snug">Fixed pricing agreed before your journey begins.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
-    </section>
+    </ShineBorder>
   );
 };
 
