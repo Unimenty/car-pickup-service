@@ -1,0 +1,57 @@
+---
+import { Car } from "lucide-react";
+---
+
+<header
+  class="fixed top-8 left-1/2 -translate-x-1/2 z-50 w-[92%] max-w-4xl bg-black/40 backdrop-blur-3xl border border-white/[0.05] shadow-2xl rounded-full px-8 py-4 flex items-center justify-between"
+>
+  <!-- Brand -->
+  <a href="/" class="flex items-center gap-3 group">
+    <div
+      class="bg-white/5 p-2 rounded-full border border-white/5 transition-all group-hover:scale-110 group-hover:bg-white/10"
+    >
+      <Car className="w-5 h-5 text-white/40 group-hover:text-white transition-colors" />
+    </div>
+    <span
+      class="text-sm font-black tracking-[0.2em] text-[#FAF9F6] uppercase"
+      >RiderOne</span
+    >
+  </a>
+
+  <!-- Desktop Nav -->
+  <nav
+    class="hidden md:flex items-center gap-10 text-[0.65rem] font-bold uppercase tracking-[0.2em] text-white/30"
+  >
+    <a href="/" class="text-white hover:text-white transition-colors">
+      Home
+    </a>
+    <a href="#services" class="hover:text-white transition-colors">Services</a>
+    <a href="#about" class="hover:text-white transition-colors">About</a>
+  </nav>
+
+  <!-- CTA and Mobile Menu -->
+  <div class="flex items-center gap-3 md:gap-4">
+    <a
+      href="#booking"
+      class="bg-[#FAF9F6] text-black px-6 py-2.5 rounded-full hover:bg-white transition-all transform hover:-translate-y-0.5 active:scale-95 text-[0.65rem] font-black uppercase tracking-[0.15em] shadow-xl"
+    >
+      Book Now
+    </a>
+
+    <!-- Mobile Toggle -->
+    <button
+      class="md:hidden p-2 group bg-white/5 border border-white/10 rounded-full hover:bg-white/10 transition-colors flex-shrink-0"
+    >
+      <div
+        class="w-5 h-0.5 bg-slate-200 mb-1 transition-all group-hover:bg-white"
+      >
+      </div>
+      <div
+        class="w-5 h-0.5 bg-slate-200 mb-1 transition-all group-hover:bg-white"
+      >
+      </div>
+      <div class="w-5 h-0.5 bg-slate-200 transition-all group-hover:bg-white">
+      </div>
+    </button>
+  </div>
+</header>

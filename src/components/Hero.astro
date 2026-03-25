@@ -1,0 +1,70 @@
+---
+---
+
+<section class="relative min-h-[90vh] md:min-h-screen flex items-center justify-center overflow-hidden bg-black">
+
+  <!-- 1. Background Layer: Large Text & Effects -->
+  <div class="absolute inset-0 z-0 flex items-center justify-center pointer-events-none select-none overflow-hidden">
+    <!-- Massive Background Text -->
+    <h1 class="text-[18vw] font-black uppercase tracking-tighter text-slate-900/50 leading-none whitespace-nowrap translate-y-[-5%]">
+      Reliable <span class="text-white/5">Rides</span>
+    </h1>
+    
+    <!-- Radial Glows -->
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-slate-500/5 blur-[120px] rounded-full"></div>
+  </div>
+
+  <!-- 2. Mid Layer: The Voxy with Rim Light -->
+  <div class="absolute inset-0 z-10 flex items-center justify-center p-4">
+    <div class="relative w-full max-w-6xl flex justify-center">
+      <!-- Rim Light Glow (Behind the car) -->
+      <div class="absolute inset-0 bg-white/5 blur-[80px] rounded-full scale-75 opacity-50"></div>
+      
+      <img
+        src="/images/voxy.png"
+        alt="Toyota Voxy"
+        class="relative w-full md:w-[85%] h-auto object-contain drop-shadow-[0_0_40px_rgba(255,255,255,0.1)] select-none pointer-events-none transition-transform duration-700 hover:scale-[1.02]"
+      />
+    </div>
+  </div>
+
+  <!-- 3. Foreground Layer: Headlines & Card -->
+  <div class="relative z-20 w-full px-4 sm:px-6 pt-32 pb-12">
+    <div class="max-w-7xl mx-auto h-full flex flex-col justify-between items-center md:items-end min-h-[60vh]">
+      
+      <!-- Top Left: Actual Visible Headline -->
+      <div class="w-full text-center md:text-left self-start">
+        <p class="text-[0.65rem] uppercase tracking-[0.5em] text-white/30 mb-5 font-bold">
+          Bespoke Professional Service
+        </p>
+        <h2 class="text-6xl sm:text-7xl md:text-9xl font-black tracking-tighter leading-[0.85] text-white drop-shadow-2xl">
+          Accra <span class="text-white/20 text-4xl sm:text-5xl align-middle mx-3 font-light">to</span> Tema
+        </h2>
+      </div>
+
+      <!-- Bottom Right: Info Card -->
+      <div class="w-full max-w-sm bg-black/40 backdrop-blur-xl border border-white/[0.08] p-8 rounded-[2.5rem] shadow-2xl mt-12 md:mt-0">
+        <p class="text-slate-300 text-sm sm:text-base leading-relaxed mb-8">
+          Professional, punctual, and spacious transport in our Toyota Voxy. 
+          The perfect choice for families and travelers with extra luggage.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-5">
+          <a href="#booking" class="flex-1 bg-[#FAF9F6] text-black py-5 rounded-full text-center text-[0.7rem] font-black uppercase tracking-[0.2em] hover:bg-white transition-all transform hover:-translate-y-0.5 active:scale-95 shadow-xl">
+            Book Now
+          </a>
+          <a
+            href="#services"
+            class="flex-1 flex items-center justify-center bg-white/[0.03] border border-white/10 py-5 rounded-full hover:bg-white/[0.08] hover:border-white/20 text-[#666666] transition-all text-[0.7rem] font-bold uppercase tracking-[0.2em]"
+          >
+            Services
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Dark Overlays for better contrast -->
+  <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/20 pointer-events-none z-[15]"></div>
+
+</section>

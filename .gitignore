@@ -1,0 +1,20 @@
+# Dependencies
+node_modules
+.pnpm-store
+
+# Build
+dist
+.astro
+
+# IDEs/Editor
+.vscode
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# System Files
+.DS_Store
+Thumbs.db

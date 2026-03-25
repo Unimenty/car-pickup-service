@@ -1,0 +1,65 @@
+---
+interface Props {
+	title: string;
+	description?: string;
+}
+
+const { title, description = "Reliable Toyota Voxy pickup service in Accra and Tema. Professional and spacious transport for airport transfers and city drives." } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+		<meta name="description" content={description} />
+		
+		<!-- Open Graph / Facebook -->
+		<meta property="og:type" content="website" />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		
+		<!-- Twitter -->
+		<meta property="twitter:card" content="summary_large_image" />
+		<meta property="twitter:title" content={title} />
+		<meta property="twitter:description" content={description} />
+
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+	</head>
+	<body class="bg-black font-['Outfit',_sans-serif] text-white selection:bg-white/10 relative min-h-screen antialiased">
+		<slot />
+	</body>
+</html>
+
+<style is:global>
+	:root {
+		--primary: #ffffff;
+		--accent: #FAF9F6;
+	}
+	html {
+		scroll-behavior: smooth;
+		color-scheme: dark;
+	}
+	body {
+		background-color: #000000;
+	}
+	/* Custom Scrollbar for premium feel */
+	::-webkit-scrollbar {
+		width: 4px;
+	}
+	::-webkit-scrollbar-track {
+		background: #000000;
+	}
+	::-webkit-scrollbar-thumb {
+		background: #222222;
+		border-radius: 10px;
+	}
+	::-webkit-scrollbar-thumb:hover {
+		background: #333333;
+	}
+</style>

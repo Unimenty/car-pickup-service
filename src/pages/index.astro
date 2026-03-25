@@ -1,0 +1,155 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import BookingForm from '../components/BookingForm';
+import { Star, ShieldCheck, Zap, Heart, Car, Users, Briefcase, Wind } from 'lucide-react';
+---
+
+<Layout title="RiderOne | Reliable Accra & Tema Toyota Voxy Pickup Service">
+	<Header />
+	<main>
+		<Hero />
+
+		<!-- Why Choose Us Section -->
+		<section id="services" class="py-24 relative overflow-hidden bg-black z-10">
+			<div class="container mx-auto px-4 sm:px-6 relative z-10 max-w-7xl">
+				<div class="text-center mb-16">
+					<h2 class="text-3xl md:text-5xl lg:text-7xl font-black mb-6 text-[#FAF9F6] tracking-tighter uppercase">Why Choose Us</h2>
+					<p class="text-white/40 max-w-2xl mx-auto uppercase tracking-[0.4em] text-[0.65rem] font-bold">Superior Travel Experience</p>
+				</div>
+
+				<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-y-16 gap-x-8 lg:gap-8">
+					{[
+						{ 
+							icon: Users, 
+							title: "Superior Comfort & Space", 
+							desc: "A 7-seater setup designed for families and groups. No more squeezing into small cars; enjoy ample legroom and a smooth, stable ride." 
+						},
+						{ 
+							icon: Briefcase, 
+							title: "Stress-Free Luggage Capacity", 
+							desc: "Designed for the traveler. Whether it's heavy airport suitcases or multiple equipment bags, our Voxy handles your gear with room to spare." 
+						},
+						{ 
+							icon: Wind, 
+							title: "Premium Climate Control", 
+							desc: "Escape the Accra heat. Experience a pristine, ice-cold, and fresh environment from the moment you step in until you reach your doorstep." 
+						},
+						{ 
+							icon: ShieldCheck, 
+							title: "Your Dedicated Chauffeur", 
+							desc: "This isn't an algorithm—it's a partnership. Enjoy punctual, door-to-door service from a professional driver who prioritizes your safety and schedule." 
+						}
+					].map(service => (
+						<div class="relative flex flex-col items-center md:items-start group">
+							<!-- Floating Icon -->
+							<div class="absolute -top-8 left-1/2 -translate-x-1/2 md:left-12 md:translate-x-0 z-20 rounded-2xl bg-white/5 border border-white/10 p-4 transition-all duration-500 group-hover:-translate-y-1">
+								<service.icon className="w-6 h-6 text-white/40 group-hover:text-white transition-colors" />
+							</div>
+
+							<!-- Feature Card -->
+							<div class="w-full p-8 pt-12 rounded-[2rem] bg-white/[0.03] border border-white/[0.08] backdrop-blur-xl hover:bg-white/[0.06] transition-all duration-300 flex flex-col items-center md:items-start text-center md:text-left shadow-2xl h-full">
+								<h3 class="text-lg md:text-xl font-bold mb-3 text-white tracking-tight">{service.title}</h3>
+								<p class="text-slate-400 text-sm leading-relaxed">{service.desc}</p>
+							</div>
+						</div>
+					))}
+				</div>
+			</div>
+		</section>
+
+		<!-- Meet Your Driver Section -->
+		<section id="about" class="py-24 relative overflow-hidden bg-black z-10">
+			<div class="container mx-auto px-4 sm:px-6 max-w-5xl relative z-10">
+				
+				<div class="text-center mb-16">
+					<p class="text-[0.65rem] uppercase tracking-[0.4em] text-white/30 mb-4 font-bold">Meet Your Driver</p>
+					<h2 class="text-3xl md:text-5xl lg:text-7xl font-black text-[#FAF9F6] tracking-tighter uppercase">Professional Chauffeur</h2>
+				</div>
+
+				<div class="flex flex-col md:flex-row items-center gap-10 md:gap-16">
+					
+					<!-- Driver Photo -->
+					<div class="w-full max-w-xs md:max-w-sm flex-shrink-0">
+						<div class="relative group">
+							<div class="absolute -inset-2 bg-white/[0.02] rounded-3xl blur-2xl group-hover:bg-white/[0.04] transition-all duration-700"></div>
+							<div class="relative overflow-hidden rounded-3xl border border-white/10">
+								<img 
+									src="/images/driver.png" 
+									alt="Your personal driver in Accra" 
+									class="w-full h-auto object-cover aspect-[4/5] transition-transform duration-700 group-hover:scale-105"
+								/>
+								<!-- Subtle bottom gradient -->
+								<div class="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/60 to-transparent pointer-events-none"></div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Driver Info -->
+					<div class="flex-1 text-center md:text-left">
+						<p class="text-slate-300 text-base sm:text-lg leading-relaxed mb-8">
+							With over <span class="text-white font-semibold">15 years</span> of experience on Ghana's roads, 
+							I provide a safe, punctual, and comfortable experience for families and travelers. 
+							Whether it's a quick trip to <span class="text-white font-semibold">Tema</span>, 
+							an <span class="text-white font-semibold">airport pickup</span>, or a corporate transfer — 
+							you're in good hands.
+						</p>
+
+						<!-- Trust Badges -->
+						<div class="flex flex-wrap justify-center md:justify-start gap-4 mb-8">
+							<div class="flex items-center gap-2 bg-white/[0.05] border border-white/[0.1] rounded-full px-4 py-2">
+								<ShieldCheck className="w-4 h-4 text-white/80" />
+								<span class="text-sm text-slate-200 font-medium">Owner-Operated</span>
+							</div>
+							<div class="flex items-center gap-2 bg-white/[0.05] border border-white/[0.1] rounded-full px-4 py-2">
+								<Star className="w-4 h-4 text-white/80" />
+								<span class="text-sm text-slate-200 font-medium">Verified Driver</span>
+							</div>
+							<div class="flex items-center gap-2 bg-white/[0.05] border border-white/[0.1] rounded-full px-4 py-2">
+								<Heart className="w-4 h-4 text-white/80" />
+								<span class="text-sm text-slate-200 font-medium">Family Friendly</span>
+							</div>
+						</div>
+
+						<!-- Stats row -->
+						<div class="grid grid-cols-3 gap-4 max-w-md mx-auto md:mx-0">
+							<div class="text-center md:text-left">
+								<p class="text-2xl md:text-3xl font-bold text-white">15+</p>
+								<p class="text-xs text-slate-500 uppercase tracking-wider mt-1">Years Experience</p>
+							</div>
+							<div class="text-center md:text-left">
+								<p class="text-2xl md:text-3xl font-bold text-white">5K+</p>
+								<p class="text-xs text-slate-500 uppercase tracking-wider mt-1">Trips Completed</p>
+							</div>
+							<div class="text-center md:text-left">
+								<p class="text-2xl md:text-3xl font-bold text-white">4.9</p>
+								<p class="text-xs text-slate-500 uppercase tracking-wider mt-1">Rating</p>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</section>
+
+		<!-- Booking Form Section -->
+		<div class="relative bg-black z-20">
+			<BookingForm client:load />
+		</div>
+	</main>
+
+	<footer class="bg-black border-t border-white/5 py-16 relative z-10">
+		<div class="container mx-auto px-4 text-center">
+			<div class="flex items-center justify-center gap-2 mb-8 group">
+				<Car className="w-5 h-5 text-white/40 transition-transform group-hover:scale-110" />
+				<span class="text-lg font-black tracking-widest text-white/80 uppercase">RiderOne</span>
+			</div>
+			<p class="text-white/20 text-[0.65rem] uppercase tracking-[0.2em] mb-10">© 2026 RiderOne Pickup Service. All rights reserved.</p>
+			<div class="flex justify-center gap-10">
+				<a href="#" class="text-white/20 hover:text-white transition-colors text-[0.65rem] uppercase tracking-widest">Privacy Policy</a>
+				<a href="#" class="text-white/20 hover:text-white transition-colors text-[0.65rem] uppercase tracking-widest">Terms of Service</a>
+			</div>
+		</div>
+	</footer>
+</Layout>
