@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Calendar, MapPin, Clock, Users, Send, ShieldCheck, Zap, Sparkles, MessageCircle } from 'lucide-react';
+import { Calendar, MapPin, Clock, Users, Send, ShieldCheck, Zap, Sparkles, MessageCircle, Car } from 'lucide-react';
 import { ShineBorder } from './ui/shine-border';
 
 const BookingForm: React.FC = () => {
@@ -10,19 +10,35 @@ const BookingForm: React.FC = () => {
     time: '',
     passengers: '1'
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isConfirmed, setIsConfirmed] = useState(false);
+  const [refNumber, setRefNumber] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const message = `Hello RiderOne! I'd like to book a ride.%0A%0A` +
-                    `📍 *Pickup:* ${formData.pickup}%0A` +
-                    `🏁 *Destination:* ${formData.destination}%0A` +
-                    `📅 *Date:* ${formData.date}%0A` +
-                    `⏰ *Time:* ${formData.time}%0A` +
-                    `👥 *Passengers:* ${formData.passengers}%0A%0A` +
-                    `Please confirm if you are available!`;
+    setIsSubmitting(true);
 
-    const phoneNumber = "233263259860";
-    window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
+    try {
+      const response = await fetch('/api/send-booking', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+      
+      if (data.success) {
+        setRefNumber(data.refNumber);
+        setIsConfirmed(true);
+      } else {
+        alert("Something went wrong. Please try again or contact us via WhatsApp.");
+      }
+    } catch (error) {
+      console.error("Submission error:", error);
+      alert("Network error. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -34,108 +50,164 @@ const BookingForm: React.FC = () => {
     >
       <div className="flex flex-col lg:flex-row items-stretch min-h-[600px]">
         
-        {/* Left Column: Form Content */}
-        <div className="flex-1 p-8 md:p-16 lg:p-20 text-left">
-          <div className="mb-12">
-            <div className="inline-flex items-center gap-2 bg-primary/5 text-primary px-4 py-2 rounded-full mb-6">
-              <Sparkles className="w-4 h-4 fill-primary" />
-              <span className="text-[0.65rem] font-black uppercase tracking-widest">Premium Service Reservation</span>
+        {/* Conditional Rendering: Form vs Success State */}
+        {!isConfirmed ? (
+          <div className="flex-1 p-8 md:p-16 lg:p-20 text-left">
+            <div className="mb-12">
+              <div className="inline-flex items-center gap-2 bg-primary/5 text-primary px-4 py-2 rounded-full mb-6">
+                <Sparkles className="w-4 h-4 fill-primary" />
+                <span className="text-[0.65rem] font-black uppercase tracking-widest">Premium Service Reservation</span>
+              </div>
+              <h2 className="text-4xl md:text-6xl font-black mb-6 text-slate-900 tracking-tighter leading-none italic uppercase">
+                Ready to <span className="text-primary italic">Secure</span> Your Ride?
+              </h2>
+              <p className="text-slate-500 text-lg md:text-xl font-medium leading-relaxed max-w-xl">
+                Fill in your itinerary details. Your dedicated chauffeur will finalize the pickup coordinates instantly.
+              </p>
             </div>
-            <h2 className="text-4xl md:text-6xl font-black mb-6 text-slate-900 tracking-tighter leading-none italic uppercase">
-              Ready to <span className="text-primary italic">Secure</span> Your Ride?
-            </h2>
-            <p className="text-slate-500 text-lg md:text-xl font-medium leading-relaxed max-w-xl">
-              Fill in your itinerary details. Your dedicated chauffeur will finalize the pickup coordinates instantly on WhatsApp.
-            </p>
-          </div>
 
-          <form onSubmit={handleSubmit} className="flex flex-col items-start w-full">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-8 w-full mb-12">
-              <div className="relative flex flex-col items-start w-full group">
-                <label className="block text-[0.65rem] font-black mb-2 pl-1 text-slate-400 uppercase tracking-[0.2em]">Pickup Location</label>
-                <div className="relative w-full">
-                  <input 
-                    type="text" required placeholder="e.g. KIA Airport, East Legon"
-                    className="w-full bg-white border border-slate-100 text-slate-900 placeholder-slate-300 rounded-3xl py-5 px-6 focus:outline-none focus:ring-4 focus:ring-primary/5 focus:border-primary transition-all text-base shadow-sm font-medium"
-                    value={formData.pickup}
-                    onChange={(e) => setFormData({...formData, pickup: e.target.value})}
-                  />
-                  <MapPin className="absolute right-6 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-300 group-focus-within:text-primary transition-colors" />
-                </div>
-              </div>
-
-              <div className="relative flex flex-col items-start w-full group">
-                <label className="block text-[0.65rem] font-black mb-2 pl-1 text-slate-400 uppercase tracking-[0.2em]">Final Destination</label>
-                <div className="relative w-full">
-                  <input 
-                    type="text" required placeholder="e.g. Tema Community 1, Osu"
-                    className="w-full bg-white border border-slate-100 text-slate-900 placeholder-slate-300 rounded-3xl py-5 px-6 focus:outline-none focus:ring-4 focus:ring-primary/5 focus:border-primary transition-all text-base shadow-sm font-medium"
-                    value={formData.destination}
-                    onChange={(e) => setFormData({...formData, destination: e.target.value})}
-                  />
-                  <Send className="absolute right-6 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-300 group-focus-within:text-primary transition-colors" />
-                </div>
-              </div>
-
-              <div className="relative flex flex-col items-start w-full group">
-                <label className="block text-[0.65rem] font-black mb-2 pl-1 text-slate-400 uppercase tracking-[0.2em]">Preferred Date</label>
-                <div className="relative w-full">
-                  <input 
-                    type="date" required
-                    className="w-full bg-white border border-slate-100 text-slate-900 rounded-3xl py-5 pl-6 pr-12 focus:outline-none focus:ring-4 focus:ring-primary/5 focus:border-primary transition-all text-base shadow-sm font-medium appearance-none"
-                    value={formData.date}
-                    onChange={(e) => setFormData({...formData, date: e.target.value})}
-                  />
-                  <Calendar className="absolute right-6 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-300 group-focus-within:text-primary transition-colors" />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 gap-6 w-full">
+            <form onSubmit={handleSubmit} className="flex flex-col items-start w-full">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 lg:gap-x-16 gap-y-8 w-full mb-12">
                 <div className="relative flex flex-col items-start w-full group">
-                  <label className="block text-[0.65rem] font-black mb-2 pl-1 text-slate-400 uppercase tracking-[0.2em]">Time</label>
+                  <label className="block text-[0.65rem] font-black mb-2 pl-1 text-slate-400 uppercase tracking-[0.2em]">Pickup Location</label>
                   <div className="relative w-full">
                     <input 
-                      type="time" required
-                      className="w-full bg-white border border-slate-100 text-slate-900 rounded-3xl py-5 px-6 focus:outline-none focus:ring-4 focus:ring-primary/5 focus:border-primary transition-all text-base shadow-sm font-medium"
-                      value={formData.time}
-                      onChange={(e) => setFormData({...formData, time: e.target.value})}
+                      type="text" required placeholder="e.g. KIA Airport, East Legon"
+                      className="w-full bg-white border border-slate-100 text-slate-900 placeholder-slate-300 rounded-3xl py-5 pl-6 pr-14 focus:outline-none focus:ring-4 focus:ring-primary/5 focus:border-primary transition-all text-base shadow-sm font-medium"
+                      value={formData.pickup}
+                      disabled={isSubmitting}
+                      onChange={(e) => setFormData({...formData, pickup: e.target.value})}
                     />
+                    <MapPin className="absolute right-6 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-300 group-focus-within:text-primary transition-colors" />
                   </div>
                 </div>
+
                 <div className="relative flex flex-col items-start w-full group">
-                  <label className="block text-[0.65rem] font-black mb-2 pl-1 text-slate-400 uppercase tracking-[0.2em]">Guests</label>
+                  <label className="block text-[0.65rem] font-black mb-2 pl-1 text-slate-400 uppercase tracking-[0.2em]">Final Destination</label>
                   <div className="relative w-full">
-                    <select 
-                      className="w-full bg-white border border-slate-100 text-slate-900 rounded-3xl py-5 px-6 focus:outline-none focus:ring-4 focus:ring-primary/5 focus:border-primary transition-all text-base shadow-sm font-medium appearance-none cursor-pointer"
-                      value={formData.passengers}
-                      onChange={(e) => setFormData({...formData, passengers: e.target.value})}
-                    >
-                      {[1,2,3,4,5,6,7].map(num => (
-                        <option key={num} value={num}>{num} Pax</option>
-                      ))}
-                    </select>
-                    <Users className="absolute right-6 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-300 group-focus-within:text-primary transition-colors" />
+                    <input 
+                      type="text" required placeholder="e.g. Tema Community 1, Osu"
+                      className="w-full bg-white border border-slate-100 text-slate-900 placeholder-slate-300 rounded-3xl py-5 pl-6 pr-14 focus:outline-none focus:ring-4 focus:ring-primary/5 focus:border-primary transition-all text-base shadow-sm font-medium"
+                      value={formData.destination}
+                      disabled={isSubmitting}
+                      onChange={(e) => setFormData({...formData, destination: e.target.value})}
+                    />
+                    <Send className="absolute right-6 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-300 group-focus-within:text-primary transition-colors" />
+                  </div>
+                </div>
+
+                <div className="relative flex flex-col items-start w-full group">
+                  <label className="block text-[0.65rem] font-black mb-2 pl-1 text-slate-400 uppercase tracking-[0.2em]">Preferred Date</label>
+                  <div className="relative w-full">
+                    <input 
+                      type="date" required
+                      className="w-full bg-white border border-slate-100 text-slate-900 rounded-3xl py-5 pl-6 pr-12 focus:outline-none focus:ring-4 focus:ring-primary/5 focus:border-primary transition-all text-base shadow-sm font-medium appearance-none"
+                      value={formData.date}
+                      disabled={isSubmitting}
+                      onChange={(e) => setFormData({...formData, date: e.target.value})}
+                    />
+                    <Calendar className="absolute right-6 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-300 group-focus-within:text-primary transition-colors" />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-6 w-full">
+                  <div className="relative flex flex-col items-start w-full group">
+                    <label className="block text-[0.65rem] font-black mb-2 pl-1 text-slate-400 uppercase tracking-[0.2em]">Time</label>
+                    <div className="relative w-full">
+                      <input 
+                        type="time" required
+                        className="w-full bg-white border border-slate-100 text-slate-900 rounded-3xl py-5 pl-6 pr-12 focus:outline-none focus:ring-4 focus:ring-primary/5 focus:border-primary transition-all text-base shadow-sm font-medium"
+                        value={formData.time}
+                        disabled={isSubmitting}
+                        onChange={(e) => setFormData({...formData, time: e.target.value})}
+                      />
+                    </div>
+                  </div>
+                  <div className="relative flex flex-col items-start w-full group">
+                    <label className="block text-[0.65rem] font-black mb-2 pl-1 text-slate-400 uppercase tracking-[0.2em]">Guests</label>
+                    <div className="relative w-full">
+                      <select 
+                        className="w-full bg-white border border-slate-100 text-slate-900 rounded-3xl py-5 pl-6 pr-12 focus:outline-none focus:ring-4 focus:ring-primary/5 focus:border-primary transition-all text-base shadow-sm font-medium appearance-none cursor-pointer"
+                        value={formData.passengers}
+                        disabled={isSubmitting}
+                        onChange={(e) => setFormData({...formData, passengers: e.target.value})}
+                      >
+                        {[1,2,3,4,5,6,7].map(num => (
+                          <option key={num} value={num}>{num} Pax</option>
+                        ))}
+                      </select>
+                      <Users className="absolute right-6 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-300 group-focus-within:text-primary transition-colors" />
+                    </div>
                   </div>
                 </div>
               </div>
+
+              <button 
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full md:w-auto flex items-center justify-center gap-6 bg-primary text-white px-20 py-6 rounded-full hover:scale-[1.03] active:scale-95 transition-all duration-500 font-black text-xl shadow-2xl shadow-primary/20 disabled:opacity-50 disabled:cursor-wait group overflow-hidden relative"
+              >
+                {isSubmitting ? (
+                  <>
+                    <div className="w-6 h-6 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
+                    <span>Verifying Schedule...</span>
+                  </>
+                ) : (
+                  <>
+                    <Zap className="w-7 h-7 fill-white/20 group-hover:animate-pulse" />
+                    <span>Confirm Booking</span>
+                  </>
+                )}
+              </button>
+              <p className="mt-8 text-slate-400 text-[10px] font-black uppercase tracking-[0.4em] flex items-center gap-3">
+                <ShieldCheck className="w-4 h-4 text-primary" />
+                Secured Submission • No Pre-payment Required
+              </p>
+            </form>
+          </div>
+        ) : (
+          /* SUCCESS STATE CARD */
+          <div className="flex-1 p-8 md:p-16 lg:p-24 text-center flex flex-col items-center justify-center animate-in fade-in zoom-in duration-700">
+            <div className="w-24 h-24 bg-green-500/10 text-green-500 rounded-full flex items-center justify-center mb-8 border border-green-500/20 shadow-2xl shadow-green-500/10">
+              <ShieldCheck className="w-12 h-12" />
+            </div>
+            
+            <h2 className="text-4xl md:text-6xl font-black text-slate-900 mb-4 tracking-tighter italic uppercase">
+              Booking <span className="text-green-500 italic">Confirmed</span>
+            </h2>
+            <p className="text-slate-500 text-lg md:text-xl font-medium mb-12 max-w-md">
+              Your request has been filed successfully. A professional chauffeur will finalize your coordinates momentarily.
+            </p>
+
+            <div className="bg-white border border-slate-200 rounded-3xl p-8 w-full max-w-md mb-12 shadow-sm relative overflow-hidden group">
+              <div className="absolute top-0 right-0 p-4 opacity-5">
+                <Car className="w-24 h-24 -rotate-12" />
+              </div>
+              <p className="text-[0.65rem] font-black uppercase tracking-[0.3em] text-slate-400 mb-2">Reference Number</p>
+              <p className="text-5xl font-black text-slate-900 tracking-tighter italic">{refNumber}</p>
             </div>
 
-            <button 
-              type="submit"
-              className="w-full md:w-auto flex items-center justify-center gap-6 bg-[#25D366] text-white px-20 py-6 rounded-full hover:bg-[#128C7E] hover:scale-[1.03] transition-all duration-500 font-black text-xl shadow-2xl hover:shadow-green-500/20 group"
-            >
-              <MessageCircle className="w-7 h-7 fill-white/20" />
-              <span>Reserve via WhatsApp</span>
-            </button>
-            <p className="mt-8 text-slate-400 text-[10px] font-black uppercase tracking-[0.4em] flex items-center gap-3">
-              <ShieldCheck className="w-4 h-4 text-primary" />
-              Secured & Punctual Service • No Pre-payment Required
-            </p>
-          </form>
-        </div>
+            <div className="flex flex-col sm:flex-row items-center gap-4 w-full justify-center">
+              <button 
+                onClick={() => window.location.reload()}
+                className="w-full sm:w-auto px-10 py-5 rounded-full border border-slate-200 font-black text-xs uppercase tracking-widest text-slate-400 hover:bg-slate-50 transition-all"
+              >
+                New Booking
+              </button>
+              <a 
+                href={`https://wa.me/233263259860?text=Hello RiderOne, I just booked with Reference: ${refNumber}. Let's discuss pickup!`}
+                target="_blank"
+                className="w-full sm:w-auto flex items-center justify-center gap-4 bg-[#25D366] text-white px-10 py-5 rounded-full hover:bg-[#128C7E] transition-all font-black text-xs uppercase tracking-widest shadow-xl shadow-green-500/20"
+              >
+                <MessageCircle className="w-5 h-5 fill-white/20" />
+                <span>Speed up via WhatsApp</span>
+              </a>
+            </div>
+          </div>
+        )}
 
         {/* Right Column: Benefits Sidebar */}
-        <div className="hidden lg:flex w-1/3 bg-slate-100/50 border-l border-slate-200 p-16 flex-col justify-center gap-10">
+        <div className="hidden lg:flex w-1/4 bg-slate-100/50 border-l border-slate-200 p-16 flex-col justify-center gap-10">
           <div className="flex flex-col gap-3">
             <div className="bg-primary/10 p-4 rounded-2xl w-fit">
               <Zap className="w-8 h-8 text-primary" />
