@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Calendar, MapPin, Clock, Users, Send, ShieldCheck, Zap, Sparkles, MessageCircle, Car } from 'lucide-react';
+import { Calendar, MapPin, Clock, Users, Send, ShieldCheck, Zap, Sparkles, MessageCircle, Car, X } from 'lucide-react';
 import { ShineBorder } from './ui/shine-border';
 
 const BookingForm: React.FC = () => {
@@ -13,10 +13,12 @@ const BookingForm: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isConfirmed, setIsConfirmed] = useState(false);
   const [refNumber, setRefNumber] = useState('');
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setErrorMessage(null);
 
     try {
       const response = await fetch('/api/send-booking', {
@@ -31,11 +33,12 @@ const BookingForm: React.FC = () => {
         setRefNumber(data.refNumber);
         setIsConfirmed(true);
       } else {
-        alert("Something went wrong. Please try again or contact us via WhatsApp.");
+        const errorDetail = data.error?.message || data.error || "Unknown Error";
+        setErrorMessage(`Server Error: ${errorDetail}`);
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error("Submission error:", error);
-      alert("Network error. Please try again.");
+      setErrorMessage(`Network Error: ${error.message || "Failed to connect to server"}`);
     } finally {
       setIsSubmitting(false);
     }
@@ -159,6 +162,20 @@ const BookingForm: React.FC = () => {
                   </>
                 )}
               </button>
+              {errorMessage && (
+                <div className="mt-6 p-4 bg-red-50 border border-red-100 rounded-2xl flex items-start gap-4 text-red-600 animate-in fade-in slide-in-from-top-2 duration-300">
+                  <div className="bg-red-100 p-1 rounded-full flex-shrink-0 mt-1">
+                    <X className="w-4 h-4" />
+                  </div>
+                  <div className="text-xs font-bold leading-relaxed tracking-tight">
+                    {errorMessage}
+                    <div className="mt-2 font-black uppercase text-[10px] tracking-widest opacity-60">
+                      Try refreshing or contact us via WhatsApp
+                    </div>
+                  </div>
+                </div>
+              )}
+              
               <p className="mt-8 text-slate-400 text-[10px] font-black uppercase tracking-[0.4em] flex items-center gap-3">
                 <ShieldCheck className="w-4 h-4 text-primary" />
                 Secured Submission • No Pre-payment Required
