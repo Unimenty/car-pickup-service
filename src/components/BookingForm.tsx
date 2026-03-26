@@ -18,8 +18,8 @@ const BookingForm: React.FC = () => {
 
   return (
     <ShineBorder 
-      className="relative w-full rounded-[4rem] bg-slate-50 border border-slate-200 shadow-3xl overflow-hidden"
-      color={["#25D366", "#3B82F6", "#A855F7", "#F97316"]}
+      className="relative w-full rounded-[4rem] bg-slate-50 border border-slate-200 overflow-hidden"
+      color={["#3B82F6", "#FFFFFF", "#3B82F6"]}
       borderWidth={2}
       duration={14}
     >
@@ -132,7 +132,7 @@ const BookingForm: React.FC = () => {
               <button 
                 type="submit"
                 disabled={state.submitting}
-                className="w-full md:w-auto flex items-center justify-center gap-6 bg-primary text-white px-20 py-6 rounded-full hover:scale-[1.03] active:scale-95 transition-all duration-500 font-black text-xl shadow-2xl shadow-primary/20 disabled:opacity-50 disabled:cursor-wait group overflow-hidden relative"
+                className="w-full md:w-auto flex items-center justify-center gap-6 bg-primary text-white px-20 py-6 rounded-full hover:scale-[1.03] active:scale-95 transition-all duration-500 font-black text-xl shadow-xl shadow-primary/10 disabled:opacity-50 disabled:cursor-wait group overflow-hidden relative"
               >
                 {state.submitting ? (
                   <>

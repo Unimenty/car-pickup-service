@@ -4,7 +4,7 @@ import { ShimmerButton } from "./ui/shimmer-button";
 ---
 
 <section
-  class="relative min-h-[95vh] md:min-h-screen flex items-center justify-center overflow-hidden bg-slate-50"
+  class="relative min-h-[95vh] md:min-h-screen flex items-center justify-center overflow-hidden bg-slate-50 py-20 lg:py-0"
 >
   <!-- 1. Background Layer: Large Text & Effects -->
   <div
@@ -12,7 +12,7 @@ import { ShimmerButton } from "./ui/shimmer-button";
   >
     <!-- Massive Background Text -->
     <h1
-      class="text-[18vw] font-black uppercase tracking-tighter text-slate-200/30 leading-none whitespace-nowrap translate-y-[-15%] opacity-50"
+      class="hero-bg-text text-[18vw] font-black uppercase tracking-tighter text-slate-200/30 leading-none whitespace-nowrap translate-y-[-15%] opacity-50"
     >
       Reliable <span class="text-primary/5">Rides</span>
     </h1>
@@ -23,111 +23,129 @@ import { ShimmerButton } from "./ui/shimmer-button";
     </div>
   </div>
 
-  <!-- 2. Mid Layer: The Voxy -->
-  <div
-    class="absolute inset-0 z-10 flex items-end justify-center md:justify-end p-4 pb-12 md:pb-24 md:pr-12 lg:pr-24"
-  >
-    <div class="relative w-full max-w-6xl flex justify-center md:justify-end">
-      <!-- Ground Shadow (Minimal) -->
-      <div
-        class="absolute bottom-6 left-1/2 -translate-x-1/2 md:left-auto md:right-0 md:translate-x-0 w-4/5 md:w-[70%] h-12 bg-black/5 blur-3xl rounded-full scale-y-50"
-      >
-      </div>
-
-      <img
-        src="/images/voxy.png"
-        alt="Toyota Voxy"
-        class="relative w-full md:w-[70%] lg:w-[65%] h-auto object-contain select-none pointer-events-none transition-transform duration-700 hover:scale-[1.01] drop-shadow-[0_20px_50px_rgba(0,0,0,0.08)]"
-      />
-    </div>
-  </div>
-
-  <!-- 3. Foreground Layer: Headlines & Card -->
-  <div class="relative z-20 w-full px-4 sm:px-6 pt-32 md:pt-48 pb-12">
+  <!-- 2. Content Layer: Headlines, Card & Image in a Single Flow -->
+  <div class="relative z-20 w-full px-4 sm:px-6 pt-20 md:pt-32 lg:pt-0">
     <div
-      class="max-w-7xl mx-auto h-full flex flex-col justify-between items-center md:items-start min-h-[75vh]"
+      class="max-w-7xl mx-auto flex flex-col lg:grid lg:grid-cols-12 lg:gap-12 items-center lg:items-end min-h-[60vh]"
     >
-      <!-- Top Left: Marketing Headline -->
-      <div class="w-full text-center md:text-left self-start relative">
-        <div
-          class="inline-flex items-center gap-2 bg-white border border-slate-200 px-4 py-2 rounded-full mb-8 shadow-sm"
-        >
-          <span class="relative flex h-2 w-2">
-            <span
-              class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"
-            ></span>
-            <span class="relative inline-flex rounded-full h-2 w-2 bg-primary"
-            ></span>
-          </span>
-          <p
-            class="text-[10px] uppercase tracking-[0.3em] text-slate-600 font-black"
+      <!-- LEFT CONTENT: Headlines & Benefit Card -->
+      <div class="w-full lg:col-span-7 flex flex-col gap-10 md:gap-16 items-center lg:items-start text-center lg:text-left">
+        
+        <div class="w-full">
+          <div
+            class="inline-flex items-center gap-2 bg-white border border-slate-200 px-4 py-2 rounded-full mb-8 shadow-sm"
           >
-            Now Available in Accra & Tema
+            <span class="relative flex h-2 w-2">
+              <span
+                class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"
+              ></span>
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-primary"
+              ></span>
+            </span>
+            <p
+              class="text-[10px] uppercase tracking-[0.3em] text-slate-600 font-black"
+            >
+              Now Available in Accra & Tema
+            </p>
+          </div>
+
+          <h2
+            class="text-5xl sm:text-7xl md:text-8xl font-black tracking-tighter leading-[0.85] text-slate-900 mb-8"
+          >
+            Premium Space.<br />
+            <span class="text-primary">Punctual</span> Arrival.
+          </h2>
+
+          <p
+            class="text-slate-600 text-lg md:text-2xl font-medium max-w-xl leading-snug mb-10 mx-auto lg:mx-0"
+          >
+            Forget the squeeze. Experience a professional 7-seater pickup service
+            designed for your comfort and luggage.
           </p>
+
+          {/* Mobile-Only CTA Button */}
+          <div class="md:hidden w-full max-w-[280px] mx-auto">
+            <a href="#booking" class="w-full">
+              <ShimmerButton
+                client:load
+                shimmerColor="rgba(59,130,246,0.4)"
+                shimmerSize="0.1em"
+                shimmerDuration="2.5s"
+                borderRadius="100px"
+                background="hsl(var(--primary))"
+                className="w-full py-5 text-sm font-black uppercase tracking-widest shadow-xl shadow-primary/20"
+              >
+                Book Your Ride
+              </ShimmerButton>
+            </a>
+          </div>
         </div>
 
-        <h2
-          class="text-5xl sm:text-7xl md:text-8xl font-black tracking-tighter leading-[0.85] text-slate-900 mb-8"
+        <!-- Benefit Card -->
+        <div
+          class="hidden md:block w-full max-w-sm bg-white border border-slate-200 p-8 rounded-[3rem] shadow-2xl relative z-30"
         >
-          Premium Space.<br />
-          <span class="text-primary">Punctual</span> Arrival.
-        </h2>
-
-        <p
-          class="text-slate-600 text-lg md:text-2xl font-medium max-w-xl leading-snug"
-        >
-          Forget the squeeze. Experience a professional 7-seater pickup service
-          designed for your comfort and luggage.
-        </p>
+          <div class="flex items-center gap-2 mb-6 text-primary">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="3"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              ><path d="m5 12 5 5L20 7"></path>
+            </svg>
+            <span
+              class="text-xs font-black uppercase tracking-widest text-slate-900"
+              >Guaranteed Professionalism</span
+            >
+          </div>
+          <p
+            class="text-slate-600 text-sm sm:text-base leading-relaxed mb-8 font-medium"
+          >
+            Skip the stress of airport delays. Our dedicated driver monitors your
+            schedule to ensure we're there before you land.
+          </p>
+          <div class="flex flex-col gap-4">
+            <a href="#booking" class="w-full">
+              <ShimmerButton
+                client:load
+                shimmerColor="rgba(59,130,246,0.4)"
+                shimmerSize="0.1em"
+                shimmerDuration="2.5s"
+                borderRadius="100px"
+                background="hsl(var(--primary))"
+                className="w-full py-4 text-sm font-black uppercase tracking-widest shadow-lg shadow-primary/20"
+              >
+                Book Your Ride
+              </ShimmerButton>
+            </a>
+            <p
+              class="text-center text-[10px] text-slate-400 font-bold uppercase tracking-widest"
+            >
+              No Hidden Fees • Instant Confirmation
+            </p>
+          </div>
+        </div>
       </div>
 
-      <!-- Bottom Left: Benefit Card -->
-      <div
-        class="w-full max-w-sm bg-white border border-slate-200 p-8 rounded-[3rem] shadow-2xl mt-12 md:mt-0"
-      >
-        <div class="flex items-center gap-2 mb-6 text-primary">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="3"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            ><path d="m5 12 5 5L20 7"></path>
-          </svg>
-          <span
-            class="text-xs font-black uppercase tracking-widest text-slate-900"
-            >Guaranteed Professionalism</span
+      <!-- RIGHT CONTENT: The Voxy (Image) -->
+      <div class="w-full lg:col-span-5 relative mt-12 lg:mt-0">
+        <div class="relative w-full flex justify-center lg:justify-end">
+          <!-- Ground Shadow -->
+          <div
+            class="absolute bottom-6 left-1/2 -translate-x-1/2 lg:left-auto lg:right-0 lg:translate-x-0 w-4/5 lg:w-full h-12 bg-black/5 blur-3xl rounded-full scale-y-50"
           >
-        </div>
-        <p
-          class="text-slate-600 text-sm sm:text-base leading-relaxed mb-8 font-medium"
-        >
-          Skip the stress of airport delays. Our dedicated driver monitors your
-          schedule to ensure we're there before you land.
-        </p>
-        <div class="flex flex-col gap-4">
-          <a href="#booking" class="w-full">
-            <ShimmerButton
-              client:load
-              shimmerColor="rgba(59,130,246,0.4)"
-              shimmerSize="0.1em"
-              shimmerDuration="2.5s"
-              borderRadius="100px"
-              background="hsl(var(--primary))"
-              className="w-full py-4 text-sm font-black uppercase tracking-widest shadow-lg shadow-primary/20"
-            >
-              Book Your Ride
-            </ShimmerButton>
-          </a>
-          <p
-            class="text-center text-[10px] text-slate-400 font-bold uppercase tracking-widest"
-          >
-            No Hidden Fees • Instant Confirmation
-          </p>
+          </div>
+
+          <img
+            src="/images/voxy.png"
+            alt="Toyota Voxy"
+            class="hero-car relative w-full sm:w-[80%] lg:w-[130%] lg:max-w-none h-auto object-contain select-none pointer-events-none drop-shadow-[0_20px_50px_rgba(0,0,0,0.08)] will-change-transform translate-x-0 lg:translate-x-12"
+          />
         </div>
       </div>
     </div>

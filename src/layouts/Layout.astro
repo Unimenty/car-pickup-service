@@ -1,5 +1,7 @@
 ---
 import '../styles/globals.css';
+import FloatingWhatsApp from '../components/FloatingWhatsApp';
+
 interface Props {
 	title: string;
 	description?: string;
@@ -32,13 +34,133 @@ const { title, description = "Reliable Toyota Voxy pickup service in Accra and T
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
 	</head>
-	<body class="bg-background font-['Plus_Jakarta_Sans',_sans-serif] text-foreground selection:bg-primary/10 relative min-h-screen antialiased">
+	<body class="bg-background font-['Plus_Jakarta_Sans',_sans-serif] text-foreground selection:bg-primary/10 relative min-h-screen antialiased overflow-x-hidden">
 		<slot />
+		<FloatingWhatsApp client:load />
+
+		<!-- Premium Smooth Scroll & Reveal Engine -->
+		<script>
+      import Lenis from 'lenis'
+      import { gsap } from 'gsap'
+      import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+      // 1. Initialize Lenis (Liquid Inertia)
+      const lenis = new Lenis({
+        lerp: 0.05,
+        duration: 1.5,
+        smoothWheel: true,
+      })
+
+      function raf(time: number) {
+        lenis.raf(time)
+        requestAnimationFrame(raf)
+      }
+
+      requestAnimationFrame(raf)
+
+      // 2. Initialize GSAP & ScrollTrigger
+      gsap.registerPlugin(ScrollTrigger)
+
+      // Sync Lenis with ScrollTrigger
+      lenis.on('scroll', ScrollTrigger.update)
+
+      gsap.ticker.add((time) => {
+        lenis.raf(time * 1000)
+      })
+
+      gsap.ticker.lagSmoothing(0)
+
+      // 3. Hero Entrance Timeline (On Load)
+      const tl = gsap.timeline({ defaults: { ease: 'expo.out' } });
+
+      tl.from('.hero-bg-text', { 
+        opacity: 0, 
+        scale: 1.2, 
+        duration: 2.5,
+        filter: 'blur(20px)'
+      })
+      .from('.hero-car', { 
+        opacity: 0, 
+        scale: 1.1,
+        filter: 'blur(30px)',
+        duration: 2.5,
+        delay: -1.8
+      })
+      .from('.hero-stagger > *', {
+        y: 60,
+        opacity: 0,
+        filter: 'blur(10px)',
+        duration: 1.5,
+        stagger: 0.15,
+        delay: -1.5
+      });
+
+      // 4. Reveal Logic (Single Blocks & Staggered Grids)
+      
+      // Block Reveals
+      const reveals = document.querySelectorAll('.reveal-on-scroll');
+      reveals.forEach((el) => {
+        gsap.fromTo(el, 
+          { opacity: 0, y: 40, filter: 'blur(10px)' },
+          {
+            opacity: 1, y: 0, filter: 'blur(0px)',
+            duration: 1.4, ease: 'expo.out',
+            scrollTrigger: {
+              trigger: el, start: 'top 90%', toggleActions: 'play none none none'
+            }
+          }
+        );
+      });
+
+      // Staggered Reveals (Individual Cards/Items)
+      const staggers = document.querySelectorAll('.stagger-reveal');
+      staggers.forEach((container) => {
+        const children = container.children;
+        gsap.fromTo(children, 
+          { 
+            opacity: 0, 
+            y: 50,
+            scale: 0.95,
+            filter: 'blur(15px)',
+          },
+          {
+            opacity: 1, 
+            y: 0,
+            scale: 1,
+            filter: 'blur(0px)',
+            duration: 1.2,
+            stagger: 0.15, // Delay between each item
+            ease: 'expo.out',
+            scrollTrigger: {
+              trigger: container,
+              start: 'top 85%',
+              toggleActions: 'play none none none'
+            }
+          }
+        );
+      });
+    </script>
 	</body>
 </html>
 
 <style is:global>
-	html {
-		scroll-behavior: smooth;
+	html.lenis {
+	  height: auto;
+	}
+
+	.lenis.lenis-smooth {
+	  scroll-behavior: auto !important;
+	}
+
+	.lenis.lenis-smooth [data-lenis-prevent] {
+	  overscroll-behavior: contain;
+	}
+
+	.lenis.lenis-stopped {
+	  overflow: hidden;
+	}
+
+	.lenis.lenis-scrolling iframe {
+	  pointer-events: none;
 	}
 </style>
