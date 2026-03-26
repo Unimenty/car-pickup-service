@@ -1,8 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Calendar, MapPin, Clock, Users, Send, ShieldCheck, Zap, Sparkles, MessageCircle, Car, X } from 'lucide-react';
 import { ShineBorder } from './ui/shine-border';
+import { useForm, ValidationError } from '@formspree/react';
 
 const BookingForm: React.FC = () => {
+  const [state, handleSubmit] = useForm("mqegkbln");
+  const [refNumber] = useState(() => `R1-${Math.floor(1000 + Math.random() * 9000)}`);
+
+  // We still use local state for input values to keep the UI reactive
   const [formData, setFormData] = useState({
     pickup: '',
     destination: '',
@@ -10,39 +15,6 @@ const BookingForm: React.FC = () => {
     time: '',
     passengers: '1'
   });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isConfirmed, setIsConfirmed] = useState(false);
-  const [refNumber, setRefNumber] = useState('');
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setErrorMessage(null);
-
-    try {
-      const response = await fetch('/api/send-booking', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      });
-
-      const data = await response.json();
-      
-      if (data.success) {
-        setRefNumber(data.refNumber);
-        setIsConfirmed(true);
-      } else {
-        const errorDetail = data.error?.message || data.error || "Unknown Error";
-        setErrorMessage(`Server Error: ${errorDetail}`);
-      }
-    } catch (error: any) {
-      console.error("Submission error:", error);
-      setErrorMessage(`Network Error: ${error.message || "Failed to connect to server"}`);
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
 
   return (
     <ShineBorder 
@@ -54,7 +26,7 @@ const BookingForm: React.FC = () => {
       <div className="flex flex-col lg:flex-row items-stretch min-h-[600px]">
         
         {/* Conditional Rendering: Form vs Success State */}
-        {!isConfirmed ? (
+        {!state.succeeded ? (
           <div className="flex-1 p-8 md:p-16 lg:p-20 text-left">
             <div className="mb-12">
               <div className="inline-flex items-center gap-2 bg-primary/5 text-primary px-4 py-2 rounded-full mb-6">
@@ -70,18 +42,24 @@ const BookingForm: React.FC = () => {
             </div>
 
             <form onSubmit={handleSubmit} className="flex flex-col items-start w-full">
+              {/* Essential Hidden Fields for Formspree mapping */}
+              <input type="hidden" name="reference" value={refNumber} />
+              <input type="hidden" name="_subject" value={`New RiderOne Reservation | ${refNumber}`} />
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 lg:gap-x-16 gap-y-8 w-full mb-12">
                 <div className="relative flex flex-col items-start w-full group">
                   <label className="block text-[0.65rem] font-black mb-2 pl-1 text-slate-400 uppercase tracking-[0.2em]">Pickup Location</label>
                   <div className="relative w-full">
                     <input 
+                      name="pickup"
                       type="text" required placeholder="e.g. KIA Airport, East Legon"
                       className="w-full bg-white border border-slate-100 text-slate-900 placeholder-slate-300 rounded-3xl py-5 pl-6 pr-14 focus:outline-none focus:ring-4 focus:ring-primary/5 focus:border-primary transition-all text-base shadow-sm font-medium"
                       value={formData.pickup}
-                      disabled={isSubmitting}
+                      disabled={state.submitting}
                       onChange={(e) => setFormData({...formData, pickup: e.target.value})}
                     />
                     <MapPin className="absolute right-6 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-300 group-focus-within:text-primary transition-colors" />
+                    <ValidationError prefix="Pickup" field="pickup" errors={state.errors} className="text-[10px] text-red-500 font-bold ml-4 mt-1 uppercase" />
                   </div>
                 </div>
 
@@ -89,13 +67,15 @@ const BookingForm: React.FC = () => {
                   <label className="block text-[0.65rem] font-black mb-2 pl-1 text-slate-400 uppercase tracking-[0.2em]">Final Destination</label>
                   <div className="relative w-full">
                     <input 
+                      name="destination"
                       type="text" required placeholder="e.g. Tema Community 1, Osu"
                       className="w-full bg-white border border-slate-100 text-slate-900 placeholder-slate-300 rounded-3xl py-5 pl-6 pr-14 focus:outline-none focus:ring-4 focus:ring-primary/5 focus:border-primary transition-all text-base shadow-sm font-medium"
                       value={formData.destination}
-                      disabled={isSubmitting}
+                      disabled={state.submitting}
                       onChange={(e) => setFormData({...formData, destination: e.target.value})}
                     />
                     <Send className="absolute right-6 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-300 group-focus-within:text-primary transition-colors" />
+                    <ValidationError prefix="Destination" field="destination" errors={state.errors} className="text-[10px] text-red-500 font-bold ml-4 mt-1 uppercase" />
                   </div>
                 </div>
 
@@ -103,13 +83,15 @@ const BookingForm: React.FC = () => {
                   <label className="block text-[0.65rem] font-black mb-2 pl-1 text-slate-400 uppercase tracking-[0.2em]">Preferred Date</label>
                   <div className="relative w-full">
                     <input 
+                      name="date"
                       type="date" required
                       className="w-full bg-white border border-slate-100 text-slate-900 rounded-3xl py-5 pl-6 pr-12 focus:outline-none focus:ring-4 focus:ring-primary/5 focus:border-primary transition-all text-base shadow-sm font-medium appearance-none"
                       value={formData.date}
-                      disabled={isSubmitting}
+                      disabled={state.submitting}
                       onChange={(e) => setFormData({...formData, date: e.target.value})}
                     />
                     <Calendar className="absolute right-6 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-300 group-focus-within:text-primary transition-colors" />
+                    <ValidationError prefix="Date" field="date" errors={state.errors} className="text-[10px] text-red-500 font-bold ml-4 mt-1 uppercase" />
                   </div>
                 </div>
 
@@ -118,10 +100,11 @@ const BookingForm: React.FC = () => {
                     <label className="block text-[0.65rem] font-black mb-2 pl-1 text-slate-400 uppercase tracking-[0.2em]">Time</label>
                     <div className="relative w-full">
                       <input 
+                        name="time"
                         type="time" required
                         className="w-full bg-white border border-slate-100 text-slate-900 rounded-3xl py-5 pl-6 pr-12 focus:outline-none focus:ring-4 focus:ring-primary/5 focus:border-primary transition-all text-base shadow-sm font-medium"
                         value={formData.time}
-                        disabled={isSubmitting}
+                        disabled={state.submitting}
                         onChange={(e) => setFormData({...formData, time: e.target.value})}
                       />
                     </div>
@@ -130,9 +113,10 @@ const BookingForm: React.FC = () => {
                     <label className="block text-[0.65rem] font-black mb-2 pl-1 text-slate-400 uppercase tracking-[0.2em]">Guests</label>
                     <div className="relative w-full">
                       <select 
+                        name="passengers"
                         className="w-full bg-white border border-slate-100 text-slate-900 rounded-3xl py-5 pl-6 pr-12 focus:outline-none focus:ring-4 focus:ring-primary/5 focus:border-primary transition-all text-base shadow-sm font-medium appearance-none cursor-pointer"
                         value={formData.passengers}
-                        disabled={isSubmitting}
+                        disabled={state.submitting}
                         onChange={(e) => setFormData({...formData, passengers: e.target.value})}
                       >
                         {[1,2,3,4,5,6,7].map(num => (
@@ -147,10 +131,10 @@ const BookingForm: React.FC = () => {
 
               <button 
                 type="submit"
-                disabled={isSubmitting}
+                disabled={state.submitting}
                 className="w-full md:w-auto flex items-center justify-center gap-6 bg-primary text-white px-20 py-6 rounded-full hover:scale-[1.03] active:scale-95 transition-all duration-500 font-black text-xl shadow-2xl shadow-primary/20 disabled:opacity-50 disabled:cursor-wait group overflow-hidden relative"
               >
-                {isSubmitting ? (
+                {state.submitting ? (
                   <>
                     <div className="w-6 h-6 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
                     <span>Verifying Schedule...</span>
@@ -162,15 +146,16 @@ const BookingForm: React.FC = () => {
                   </>
                 )}
               </button>
-              {errorMessage && (
+              
+              {state.errors && !state.succeeded && (
                 <div className="mt-6 p-4 bg-red-50 border border-red-100 rounded-2xl flex items-start gap-4 text-red-600 animate-in fade-in slide-in-from-top-2 duration-300">
                   <div className="bg-red-100 p-1 rounded-full flex-shrink-0 mt-1">
                     <X className="w-4 h-4" />
                   </div>
                   <div className="text-xs font-bold leading-relaxed tracking-tight">
-                    {errorMessage}
+                    Submission Error
                     <div className="mt-2 font-black uppercase text-[10px] tracking-widest opacity-60">
-                      Try refreshing or contact us via WhatsApp
+                      Check your connection or contact us via WhatsApp
                     </div>
                   </div>
                 </div>
@@ -183,7 +168,7 @@ const BookingForm: React.FC = () => {
             </form>
           </div>
         ) : (
-          /* SUCCESS STATE CARD */
+          /* SUCCESS STATE CARD (state.succeeded) */
           <div className="flex-1 p-8 md:p-16 lg:p-24 text-center flex flex-col items-center justify-center animate-in fade-in zoom-in duration-700">
             <div className="w-24 h-24 bg-green-500/10 text-green-500 rounded-full flex items-center justify-center mb-8 border border-green-500/20 shadow-2xl shadow-green-500/10">
               <ShieldCheck className="w-12 h-12" />
